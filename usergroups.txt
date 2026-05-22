@@ -1,0 +1,11 @@
+# Supplementary groups for the install user.
+# One per line; blank lines and `#` comments are ignored.
+# Groups that don't exist on the target system are skipped (the package
+# owning them probably isn't installed yet).
+
+power
+usbmux
+docker
+video
+input
+wheel

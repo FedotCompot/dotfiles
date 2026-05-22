@@ -69,6 +69,7 @@ linux
 linux-firmware
 linux-headers
 linux-lts
+linux-lts-headers
 mise
 mpv
 mtr
@@ -128,9 +129,11 @@ waybar
 wev
 wget
 wireplumber
+wl-clipboard
 woff2-font-awesome
 wofi
 wpa_supplicant
+xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
 xdg-utils
 xorg-server

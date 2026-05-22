@@ -37,20 +37,27 @@ config/                     -> $HOME/.config/
 git clone <this-repo> ~/code/dotfiles
 cd ~/code/dotfiles
 
-./arch-setup.sh          # multilib + pikaur + every package
+./arch-setup.sh          # multilib + pikaur + every package + user groups
 ./install.sh --dry-run   # preview dotfile symlinks
 ./install.sh             # apply dotfile symlinks
+# reboot, then on first TTY login:
+./first-login.sh         # enable services, baseline snapshot, etc.
 ```
+
+For the full Arch install walkthrough (archinstall + BTRFS snapshots,
+Hyprland/Wayland gotchas, Electron blur fix, theming, etc.) see
+[INSTALL.md](INSTALL.md).
 
 ### `arch-setup.sh`
 
-Enables `[multilib]` in `/etc/pacman.conf`, builds **pikaur** from AUR, then
+Enables `[multilib]` in `/etc/pacman.conf`, builds **pikaur** from AUR,
 installs everything listed in `pacman.txt` (official repos) and `aur.txt`
-(AUR). The package lists are plain text, one package per line; blank lines and
-`#` comments are ignored. Re-running is idempotent — `--needed` skips packages
-already installed.
+(AUR), and adds the user to every group in `usergroups.txt`. The lists are
+plain text, one entry per line; blank lines and `#` comments are ignored.
+Re-running is idempotent — `--needed` skips packages already installed,
+and group/membership additions are guarded by existence checks.
 
-Regenerate the lists from a live box with:
+Regenerate the package lists from a live box with:
 
 ```bash
 pacman -Qqen > pacman.txt   # explicit native packages
@@ -61,6 +68,13 @@ pacman -Qqem > aur.txt      # explicit AUR/foreign packages
 
 Symlinks tracked files into their real locations and moves any pre-existing
 files into `~/.dotfiles-backup/<timestamp>/` so nothing is lost.
+
+### `first-login.sh`
+
+Run once after the first real boot (see [INSTALL.md §3](INSTALL.md#3-first-boot--run-first-loginsh)).
+Enables system services, sets the XDG dark-mode hint, writes the VSCode
+`.desktop` Wayland override, configures Timeshift for BTRFS, and takes a
+baseline snapshot. Idempotent.
 
 ## What's deliberately not in here
 

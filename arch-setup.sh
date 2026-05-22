@@ -13,6 +13,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACMAN_LIST="$SCRIPT_DIR/pacman.txt"
 AUR_LIST="$SCRIPT_DIR/aur.txt"
+GROUPS_LIST="$SCRIPT_DIR/usergroups.txt"
 
 if [ "${EUID:-$(id -u)}" -eq 0 ]; then
   echo "Run as your normal user — the script invokes sudo where needed." >&2
@@ -71,6 +72,31 @@ if [ -n "$pkgs" ]; then
   pikaur -S --needed --noconfirm $pkgs
 else
   echo "  (list empty or missing — skipping)"
+fi
+
+# 4. User groups -----------------------------------------------------------------
+step "Adding $USER to supplementary groups from $(basename "$GROUPS_LIST")"
+current=$(id -nG "$USER" | tr ' ' '\n')
+while IFS= read -r g; do
+  [ -z "$g" ] && continue
+  if ! getent group "$g" >/dev/null 2>&1; then
+    echo "  $g group missing — skipping (package owning it not installed yet?)"
+    continue
+  fi
+  if printf '%s\n' "$current" | grep -qx "$g"; then
+    echo "  $g already a member"
+  else
+    sudo usermod -aG "$g" "$USER"
+    echo "  $g added"
+  fi
+done < <(read_list "$GROUPS_LIST")
+
+# 5. Claude Code (bun global) ----------------------------------------------------
+step "Installing Claude Code CLI"
+if command -v claude >/dev/null 2>&1; then
+  echo "  already installed"
+else
+  bun install -g @anthropic-ai/claude-code
 fi
 
 step "Done"
