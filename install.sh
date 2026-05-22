@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 #
-# Symlinks tracked configs into their real locations.
-# Existing files are moved aside into a timestamped backup dir.
+# Symlinks tracked configs into their real locations, *file by file*.
+# Parent directories on the target side are created as real directories so
+# that apps writing state alongside config (VS Code's Cache/, etc.) don't
+# leak into the repo.
 #
 # Layout:
 #   home/<path>   -> $HOME/<path>
-#   config/<name> -> $HOME/.config/<name>
+#   config/<path> -> $HOME/.config/<path>
+#
+# Existing files are moved aside into a timestamped backup dir.
 
 set -euo pipefail
 
@@ -59,16 +63,17 @@ say "Dotfiles install (repo: $REPO_DIR)"
 [ "$DRY_RUN" -eq 1 ] && say "(dry-run — no changes will be made)"
 say "Backup dir: $BACKUP_DIR"
 
-# Top-level files in $HOME
-for f in .bash_profile .bashrc .bashrc.bak .gitconfig .inputrc; do
-  link "$REPO_DIR/home/$f" "$HOME/$f"
-done
+# Walk every file under home/ and symlink into $HOME, preserving structure
+while IFS= read -r -d '' src; do
+  rel="${src#$REPO_DIR/home/}"
+  link "$src" "$HOME/$rel"
+done < <(find "$REPO_DIR/home" -type f -print0)
 
-# Each top-level entry under config/ -> ~/.config/<name>
-for entry in "$REPO_DIR"/config/*; do
-  name="$(basename "$entry")"
-  link "$entry" "$HOME/.config/$name"
-done
+# Walk every file under config/ and symlink into $HOME/.config, preserving structure
+while IFS= read -r -d '' src; do
+  rel="${src#$REPO_DIR/config/}"
+  link "$src" "$HOME/.config/$rel"
+done < <(find "$REPO_DIR/config" -type f -print0)
 
 say
 say "Done."
