@@ -1,0 +1,26 @@
+{
+    "security.workspace.trust.untrustedFiles": "open",
+    "keyboard.dispatch": "keyCode",
+    "terminal.integrated.mouseWheelScrollSensitivity": 3,
+    "workbench.startupEditor": "none",
+    "workbench.editor.restoreEditors": false,
+    "gitlens.ai.model": "gitkraken",
+    "gitlens.ai.gitkraken.model": "gemini:gemini-2.5-flash",
+    "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Font Awesome 6 Free Solid', 'Font Awesome 6 Free', 'Symbols Nerd Font', 'Noto Color Emoji'",
+    "git.autofetch": true,
+    "gitlens.graph.layout": "editor",
+    "claudeCode.preferredLocation": "panel",
+    "gitlens.hovers.currentLine.over": "line",
+    "gitlens.views.commits.files.layout": "list",
+    "gitlens.views.commits.files.compact": false,
+    "gitlens.hovers.enabled": false,
+    "go.buildFlags": [
+    "-tags=integration"
+    ],
+    "gopls": {
+        "build.buildFlags": ["-tags=integration"]
+    },
+    "files.autoSave": "afterDelay",
+    "go.toolsManagement.autoUpdate": true,
+    "terminal.integrated.enableMultiLinePasteWarning": "never"
+}
