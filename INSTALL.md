@@ -136,27 +136,11 @@ script only sets the minimum `timeshift-autosnap` needs.
 Context for choices baked into the configs and package lists. Useful when
 something looks weird and you need to know whether to touch it.
 
-### Keyboard: `intl` variant, VSCode on `Ctrl+J`
+### Keyboard
 
-The `intl` variant turns `'`, `"`, and `` ` `` into dead keys, which
-historically broke VSCode's default `Ctrl+`` (toggle terminal) — the IDE
-would swallow the backtick waiting for a follow-up letter to compose an
-accent. Rather than fight XKB, the rebind happens in
-`config/Code/User/keybindings.json`:
-
-- `Ctrl+J` → toggle terminal (default `Ctrl+`` is unbound).
-- `Ctrl+Shift+J` → new terminal (default `Ctrl+Shift+`` is unbound).
-
-Both are dead-key-immune by construction. The XKB layout itself stays
-practical: `config/hypr/input.lua` sets `kb_options = "grp:shifts_toggle,
-compose:menu, nodeadkeys:false"` — `compose:menu` moves composition to
-the Menu key so accented chars are still reachable, and the layout switch
-happens with both Shifts at once (the XKB option is `grp:shifts_toggle`;
-`grp:both_shifts_toggle` silently does nothing).
-
-`"keyboard.dispatch": "keyCode"` is kept in `Code/User/settings.json` as
-belt-and-suspenders for any other shortcut that might end up tangled with
-Wayland's flaky physical scancodes.
+`config/hypr/input.lua` includes `nodeadkeys:false` in `kb_options` to
+keep `'`, `"`, and `` ` `` from behaving as dead keys under the `intl`
+variant.
 
 ### Electron / Wayland blur
 
