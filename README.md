@@ -22,10 +22,10 @@ config/                     -> $HOME/.config/
   btop/                     btop system monitor
   fontconfig/               font rules
   nwg-look/                 GTK theme picker
-  qt6ct/  QtProject.conf    Qt theming
+  qt6ct/                    Qt theming
   Code/User/                VS Code settings + keybindings
   autostart/                XDG autostart entries (ferdium)
-  kdeglobals kiorc ktrashrc kwalletrc dolphinrc
+  kdeglobals kiorc kwalletrc dolphinrc
   mimeapps.list             default app handlers
   pavucontrol.ini
   pikaur.conf
@@ -83,3 +83,17 @@ baseline snapshot. Idempotent.
 - App runtime/cache: dconf, kwallet contents, pulse, mozilla, dotnet, freelens,
   navicat, balenaEtcher, etc.
 - Empty config dirs (kitty, helix, mpv, gtk-3.0) — nothing to back up yet.
+- KDE/Qt files keyed by absolute home path (`ktrashrc`, `QtProject.conf`) —
+  section headers / `lastVisited` paths bake in the original username, so KDE
+  ignores them on any other user. The apps regenerate sensible defaults.
+
+## Post-install: set your git identity
+
+`home/.gitconfig` deliberately ships **without** `user.name` / `user.email`
+so it never silently commits under someone else's identity. Set yours after
+`./install.sh`:
+
+```bash
+git config --global user.name  "Your Name"
+git config --global user.email "you@example.com"
+```
