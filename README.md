@@ -10,7 +10,7 @@ home/                       -> $HOME/
   .bash_profile
   .bashrc                   (the mybash bashrc, unpacked from upstream)
   .bashrc.bak               (snapshot of the pre-mybash bashrc)
-  .gitconfig
+  .gitconfig.template       (seeded; fill in [user] locally after install)
   .inputrc
 
 config/                     -> $HOME/.config/
@@ -28,8 +28,11 @@ config/                     -> $HOME/.config/
   kdeglobals kiorc kwalletrc dolphinrc
   mimeapps.list             default app handlers
   pavucontrol.ini
-  pikaur.conf
+  pikaur.conf.template      (seeded; pikaur rewrites paths locally)
 ```
+
+Files ending in `.template` are **copied** on first install instead of
+symlinked, and skipped on later runs — see [`install.sh`](#installsh) below.
 
 ## Install on a fresh box
 
@@ -69,6 +72,14 @@ pacman -Qqem > aur.txt      # explicit AUR/foreign packages
 Symlinks tracked files into their real locations and moves any pre-existing
 files into `~/.dotfiles-backup/<timestamp>/` so nothing is lost.
 
+Files ending in `.template` (currently `home/.gitconfig.template` and
+`config/pikaur.conf.template`) get a different treatment: they're **copied**
+into place with the `.template` suffix stripped, and only when the target
+doesn't already exist. This is for files that need to diverge per-machine
+without showing up as working-tree changes — git identity in `.gitconfig`,
+and the `cachepath`/`datapath` lines pikaur rewrites with the local user's
+home on every run.
+
 ### `first-login.sh`
 
 Run once after the first real boot (see [INSTALL.md §3](INSTALL.md#3-first-boot--run-first-loginsh)).
@@ -89,9 +100,9 @@ baseline snapshot. Idempotent.
 
 ## Post-install: set your git identity
 
-`home/.gitconfig` deliberately ships **without** `user.name` / `user.email`
-so it never silently commits under someone else's identity. Set yours after
-`./install.sh`:
+The `home/.gitconfig.template` seed copied to `~/.gitconfig` deliberately
+ships **without** `user.name` / `user.email` so it never silently commits
+under someone else's identity. Set yours after `./install.sh`:
 
 ```bash
 git config --global user.name  "Your Name"
