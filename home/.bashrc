@@ -130,7 +130,7 @@ alias freshclam='sudo freshclam'
 alias vi='nvim'
 alias svi='sudo vi'
 alias vis='nvim "+set si"'
-alias yayf="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S"
+alias pikaurf="pikaur -Slq | fzf --multi --preview 'pikaur -Sii {1}' --preview-window=down:75% | xargs -ro pikaur -S"
 
 # Change directory aliases
 alias home='cd ~'

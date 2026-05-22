@@ -36,12 +36,31 @@ config/                     -> $HOME/.config/
 ```bash
 git clone <this-repo> ~/code/dotfiles
 cd ~/code/dotfiles
-./install.sh --dry-run   # preview
-./install.sh             # apply
+
+./arch-setup.sh          # multilib + pikaur + every package
+./install.sh --dry-run   # preview dotfile symlinks
+./install.sh             # apply dotfile symlinks
 ```
 
-`install.sh` symlinks tracked files into their real locations and moves any
-pre-existing files into `~/.dotfiles-backup/<timestamp>/` so nothing is lost.
+### `arch-setup.sh`
+
+Enables `[multilib]` in `/etc/pacman.conf`, builds **pikaur** from AUR, then
+installs everything listed in `pacman.txt` (official repos) and `aur.txt`
+(AUR). The package lists are plain text, one package per line; blank lines and
+`#` comments are ignored. Re-running is idempotent — `--needed` skips packages
+already installed.
+
+Regenerate the lists from a live box with:
+
+```bash
+pacman -Qqen > pacman.txt   # explicit native packages
+pacman -Qqem > aur.txt      # explicit AUR/foreign packages
+```
+
+### `install.sh`
+
+Symlinks tracked files into their real locations and moves any pre-existing
+files into `~/.dotfiles-backup/<timestamp>/` so nothing is lost.
 
 ## What's deliberately not in here
 
@@ -50,16 +69,3 @@ pre-existing files into `~/.dotfiles-backup/<timestamp>/` so nothing is lost.
 - App runtime/cache: dconf, kwallet contents, pulse, mozilla, dotnet, freelens,
   navicat, balenaEtcher, etc.
 - Empty config dirs (kitty, helix, mpv, gtk-3.0) — nothing to back up yet.
-
-## Required packages (Hyprland desktop)
-
-Not exhaustive — install as needed:
-
-```
-hyprland hyprlock hyprpaper waybar swaync ghostty btop
-qt6ct nwg-look fontconfig starship
-ferdium-bin  # AUR (autostart entry references it)
-```
-
-The mybash bootstrap is run by sourcing `~/.bashrc` (which after install
-resolves to `~/.local/share/mybash/.bashrc`).
