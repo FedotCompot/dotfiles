@@ -133,5 +133,4 @@ xdg-utils
 xorg-server
 xorg-xinit
 yq
-yt-dlp
 zathura
