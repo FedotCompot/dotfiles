@@ -22,17 +22,13 @@ cups-pk-helper
 docker
 docker-buildx
 docker-compose
-dolphin
 dosfstools
-dunst
 efibootmgr
 evtest
 exfatprogs
 expac
 expect
 fastfetch
-firefox
-foot
 fuse2
 fuse2fs
 fzf
@@ -44,7 +40,6 @@ grim
 grub-btrfs
 gst-plugin-pipewire
 gvfs
-helix
 helm
 htop
 hyprland
@@ -131,7 +126,6 @@ wget
 wireplumber
 wl-clipboard
 woff2-font-awesome
-wofi
 wpa_supplicant
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
