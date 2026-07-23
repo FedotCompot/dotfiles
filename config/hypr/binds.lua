@@ -88,10 +88,12 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = tr
 -- Screenshots
 hl.bind("Print",           hl.dsp.exec_cmd("grim - | wl-copy"))                                 -- full screen → clipboard
 hl.bind("SHIFT + Print",   hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy"))                 -- region → clipboard
-hl.bind("ALT + SHIFT + S", hl.dsp.exec_cmd("grimblast --freeze save area - | swappy -f -"))    -- region → swappy editor
+hl.bind("ALT + SHIFT + S", hl.dsp.exec_cmd("grim - | satty -f - --copy-command wl-copy"))    -- region → satty editor
+-- hl.bind("ALT + SHIFT + S", hl.dsp.exec_cmd("grimblast --freeze save area - | swappy -f -"))    -- region → swappy editor
 
 -- Misc
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen_state({ internal = 1, client = 0, action = "toggle" }))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("helium-browser"))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("claude-desktop --toggle"))   -- Claude Desktop Quick Entry
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t -sw"))
