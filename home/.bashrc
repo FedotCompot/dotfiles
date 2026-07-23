@@ -3,7 +3,7 @@ iatest=$(expr index "$-" i)
 #######################################################
 # SOURCED ALIAS'S AND SCRIPTS BY zachbrowne.me
 #######################################################
-if [ -f /usr/bin/fastfetch ]; then
+if [[ $- == *i* ]] && [ -t 1 ] && [ -f /usr/bin/fastfetch ]; then
 	fastfetch
 fi
 
@@ -597,3 +597,4 @@ export PATH=$PATH:"$HOME/.local/bin:$HOME/.cargo/bin:/var/lib/flatpak/exports/bi
 
 eval "$(starship init bash)"
 eval "$(zoxide init bash)"
+. "$HOME/.cargo/env"
