@@ -8,7 +8,6 @@
     "gitlens.ai.gitkraken.model": "gemini:gemini-2.5-flash",
     "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Font Awesome 6 Free Solid', 'Font Awesome 6 Free', 'Symbols Nerd Font', 'Noto Color Emoji'",
     "git.autofetch": true,
-    "gitlens.graph.layout": "editor",
     "claudeCode.preferredLocation": "panel",
     "gitlens.hovers.currentLine.over": "line",
     "gitlens.views.commits.files.layout": "list",
@@ -22,5 +21,30 @@
     },
     "files.autoSave": "afterDelay",
     "go.toolsManagement.autoUpdate": true,
-    "terminal.integrated.enableMultiLinePasteWarning": "never"
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
+    "diffEditor.renderSideBySide": true,
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+    "remote.SSH.useLocalServer": false,
+    "remote.SSH.remotePlatform": {
+        "192.168.3.161": "linux"
+    },
+    "gitlens.graph.autoFetch.enabled": true,
+    "explorer.confirmDelete": false,
+    "git.confirmSync": false,
+    "githubPullRequests.pullBranch": "never",
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "gitlens.graph.lanes.density": "expanded",
+    "security.promptForLocalFileProtocolHandling": false,
+    "gitlens.graph.changesColumn.enabled": true,
+    "gitlens.views.commitDetails.files.layout": "tree",
+    "gitlens.graph.layout": "editor",
+    "workbench.experimental.modernUI": true,
+    "gitlens.graph.details.location": "auto"
 }
