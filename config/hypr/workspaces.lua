@@ -30,7 +30,7 @@ hl.workspace_rule({ workspace = M.ws_code,     monitor = M.monitor_center, on_cr
 hl.workspace_rule({ workspace = M.ws_devops,   monitor = M.monitor_center, on_created_empty = "freelens" })
 hl.workspace_rule({ workspace = M.ws_files,    monitor = M.monitor_center, on_created_empty = "thunar" })
 hl.workspace_rule({ workspace = M.ws_media,    monitor = M.monitor_right,  on_created_empty = "spotify" })
-hl.workspace_rule({ workspace = M.ws_chat,     monitor = M.monitor_right,  on_created_empty = "vesktop" })
+hl.workspace_rule({ workspace = M.ws_chat,     monitor = M.monitor_right })
 hl.workspace_rule({ workspace = M.ws_teams,    monitor = M.monitor_right,  on_created_empty = "ferdium" })
 hl.workspace_rule({ workspace = M.ws_utility,  monitor = M.monitor_right,  on_created_empty = "obsidian" })
 hl.workspace_rule({ workspace = M.ws_settings, monitor = M.monitor_right,  on_created_empty = "pavucontrol" })
