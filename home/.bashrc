@@ -132,6 +132,9 @@ alias svi='sudo vi'
 alias vis='nvim "+set si"'
 alias pikaurf="pikaur -Slq | fzf --multi --preview 'pikaur -Sii {1}' --preview-window=down:75% | xargs -ro pikaur -S"
 
+# Use bun as the node runtime
+alias node='bun'
+
 # Change directory aliases
 alias home='cd ~'
 alias cd..='cd ..'
@@ -598,3 +601,4 @@ export PATH=$PATH:"$HOME/.local/bin:$HOME/.cargo/bin:/var/lib/flatpak/exports/bi
 eval "$(starship init bash)"
 eval "$(zoxide init bash)"
 . "$HOME/.cargo/env"
+alias Plex='env -u QT_STYLE_OVERRIDE Plex'
