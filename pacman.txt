@@ -126,6 +126,7 @@ wget
 wireplumber
 wl-clipboard
 woff2-font-awesome
+wofi
 wpa_supplicant
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
