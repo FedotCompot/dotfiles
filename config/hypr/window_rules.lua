@@ -30,6 +30,15 @@ hl.window_rule({
     float = true,
 })
 
+-- Bitwarden extension popup
+hl.window_rule({
+    name  = "float-bitwarden",
+    match = { class = "^chrome-.*?-Default$", initial_title = "^_crx_nngceckbapebfimnlniiiahkandclblb$" },
+    float  = true,
+    size   = "649 708",
+    center = true,
+})
+
 -- App → workspace assignment
 -- workspace IDs: 1=terminal ` | 2=browser 1 | 3=code 2 | 4=devops 3 | 5=files 4
 --                6=media 5   | 7=chat 6    | 8=teams 7 | 9=utility 8 | 10=settings 9
