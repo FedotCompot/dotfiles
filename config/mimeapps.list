@@ -4,12 +4,17 @@ x-scheme-handler/http=helium-work.desktop
 x-scheme-handler/https=helium-work.desktop
 x-scheme-handler/about=helium-work.desktop
 x-scheme-handler/unknown=helium-work.desktop
-x-scheme-handler/tg=userapp-AyuGram Desktop-HIAQO3.desktop
-x-scheme-handler/tonsite=userapp-AyuGram Desktop-QHFQO3.desktop
+x-scheme-handler/tg=userapp-AyuGram Desktop-GQ2MU3.desktop
+x-scheme-handler/tonsite=userapp-AyuGram Desktop-G58MU3.desktop
 x-scheme-handler/discord=vesktop.desktop
 x-scheme-handler/claude-cli=claude-code-url-handler.desktop
 x-scheme-handler/irc=helium-work.desktop
+x-scheme-handler/mailto=helium.desktop
+x-scheme-handler/freelens=freelens.desktop
+x-scheme-handler/claude=com.anthropic.Claude.desktop
+x-scheme-handler/webcal=helium.desktop
 
 [Added Associations]
-x-scheme-handler/tg=userapp-AyuGram Desktop-HIAQO3.desktop;
-x-scheme-handler/tonsite=userapp-AyuGram Desktop-QHFQO3.desktop;
+x-scheme-handler/tg=userapp-AyuGram Desktop-HIAQO3.desktop;userapp-AyuGram Desktop-GQ2MU3.desktop;
+x-scheme-handler/tonsite=userapp-AyuGram Desktop-QHFQO3.desktop;userapp-AyuGram Desktop-G58MU3.desktop;
+video/matroska=vlc.desktop;
