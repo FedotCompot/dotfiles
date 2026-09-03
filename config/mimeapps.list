@@ -1,7 +1,7 @@
 [Default Applications]
-text/html=helium-work.desktop
-x-scheme-handler/http=helium-work.desktop
-x-scheme-handler/https=helium-work.desktop
+text/html=url-router.desktop
+x-scheme-handler/http=url-router.desktop
+x-scheme-handler/https=url-router.desktop
 x-scheme-handler/about=helium-work.desktop
 x-scheme-handler/unknown=helium-work.desktop
 x-scheme-handler/tg=userapp-AyuGram Desktop-GQ2MU3.desktop

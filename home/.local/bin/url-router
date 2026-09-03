@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# default http(s) handler: Teams links go to Ferdium's Teams service, the rest to the browser
+set -euo pipefail
+
+browser_desktop_id=helium-work
+ferdium_dir="$HOME/.config/Ferdium"
+teams_hosts='teams\.microsoft\.com|teams\.cloud\.microsoft|teams\.live\.com'
+
+is_teams_url() {
+  [[ "$1" =~ ^https://($teams_hosts)([/?#]|$) ]]
+}
+
+ferdium_running() {
+  busctl --user --no-pager status org.ferdium.Ferdium >/dev/null 2>&1
+}
+
+teams_sidebar_slot() {
+  sqlite3 -readonly "$ferdium_dir/server.sqlite" \
+    "select 1 + count(*) from services
+     where json_extract(settings, '\$.order') <
+       (select json_extract(settings, '\$.order') from services where recipeId = 'msteams');"
+}
+
+hypr() {
+  hyprctl eval "return hl.dispatch($1)" >/dev/null
+}
+
+open_in_ferdium() {
+  local tmp slot
+  tmp=$(mktemp "$ferdium_dir/config/.msteams-open-url.XXXXXX")
+  printf '%s\n' "$1" >"$tmp"
+  mv -f "$tmp" "$ferdium_dir/config/msteams-open-url"
+
+  if ! ferdium_running; then
+    setsid -f ferdium >/dev/null 2>&1
+    return
+  fi
+  hypr 'hl.dsp.focus{ window = "class:ferdium" }'
+  slot=$(teams_sidebar_slot)
+  if ((slot >= 1 && slot <= 9)); then
+    hypr "hl.dsp.send_shortcut{ mods = \"CTRL\", key = \"$slot\", window = \"class:ferdium\" }"
+  fi
+}
+
+open_in_browser() {
+  gtk-launch "$browser_desktop_id" "$@"
+}
+
+if (($# == 0)); then
+  open_in_browser
+  exit
+fi
+
+for url in "$@"; do
+  if is_teams_url "$url"; then
+    open_in_ferdium "$url"
+  else
+    open_in_browser "$url"
+  fi
+done

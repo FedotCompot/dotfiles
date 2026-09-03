@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=URL Router
+Comment=Opens Teams links in Ferdium, everything else in the browser
+Exec=/home/fedot/.local/bin/url-router %U
+Icon=ferdium
+Terminal=false
+NoDisplay=true
+Categories=Network;WebBrowser;
+MimeType=text/html;x-scheme-handler/http;x-scheme-handler/https;
