@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+# Chromium native-messaging host: forwards {"url": ...} to url-router
+import json
+import os
+import struct
+import subprocess
+import sys
+
+ROUTER = os.path.expanduser('~/.local/bin/url-router')
+
+
+def read_message():
+    header = sys.stdin.buffer.read(4)
+    if len(header) < 4:
+        sys.exit(0)
+    (length,) = struct.unpack('<I', header)
+    return json.loads(sys.stdin.buffer.read(length))
+
+
+def write_message(payload):
+    data = json.dumps(payload).encode()
+    sys.stdout.buffer.write(struct.pack('<I', len(data)) + data)
+    sys.stdout.buffer.flush()
+
+
+url = str(read_message().get('url', ''))
+ok = url.startswith('https://')
+if ok:
+    result = subprocess.run([ROUTER, url], stdin=subprocess.DEVNULL, stdout=sys.stderr)
+    ok = result.returncode == 0
+write_message({'ok': ok})

@@ -1,0 +1,7 @@
+{
+  "name": "eu.fedot.url_router",
+  "description": "Forwards Teams meeting links to url-router",
+  "path": "/home/fedot/.local/bin/url-router-native",
+  "type": "stdio",
+  "allowed_origins": ["chrome-extension://blheohgidimafafheeadmghmognppiee/"]
+}

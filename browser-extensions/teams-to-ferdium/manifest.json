@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Teams to Ferdium",
+  "version": "1.0",
+  "description": "Hands Teams meeting links to url-router so they open in Ferdium's Teams service",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwhOQHRaTan/CeQ8QEvSfk7Q7gBE9RbXx2He4Q6qop9Jhmw902CEgQX1VRB1HnxUBfFqzTN5OBBYFXTwpv1tTqfPu/KsAIcRJxZq8SCTFBAiOKx3GLWxvZ5pfvBpSkA265+HRtqJ+lCjpLr6jZ6EkxU0DjWehao4USkKalVQmeFJ9F4wWePb8JlNGRBNf5UTz0vw/EpsrbUnmiQRTUmpdi+rd+0KpLzOF2RydcgBF5zI65HNOxo/K5U0acE1rkyocCCS2EI9msL2nwwk6FpSz9O5vISi6AY7Jx0PFrcUUbWiMeV/02IjxUEJE5oLdkKYyRhWOkdG1nOjUf2T6aPO86wIDAQAB",
+  "permissions": ["declarativeNetRequest", "nativeMessaging", "tabs"],
+  "host_permissions": [
+    "https://teams.microsoft.com/*",
+    "https://teams.live.com/*",
+    "https://teams.cloud.microsoft/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [{ "id": "teams", "enabled": true, "path": "rules.json" }]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["open.html"],
+      "matches": [
+        "https://teams.microsoft.com/*",
+        "https://teams.live.com/*",
+        "https://teams.cloud.microsoft/*"
+      ]
+    }
+  ]
+}
