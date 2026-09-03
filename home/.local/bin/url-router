@@ -10,6 +10,19 @@ is_teams_url() {
   [[ "$1" =~ ^https://($teams_hosts)([/?#]|$) ]]
 }
 
+percent_decode() {
+  local s="${1//+/ }"
+  printf '%b' "${s//%/\\x}"
+}
+
+unwrap_google_redirect() {
+  if [[ "$1" =~ ^https?://(www\.)?google\.[a-z.]+/url\?(.*&)?q=([^&]+) ]]; then
+    percent_decode "${BASH_REMATCH[3]}"
+  else
+    printf '%s' "$1"
+  fi
+}
+
 ferdium_running() {
   busctl --user --no-pager status org.ferdium.Ferdium >/dev/null 2>&1
 }
@@ -52,8 +65,9 @@ if (($# == 0)); then
 fi
 
 for url in "$@"; do
-  if is_teams_url "$url"; then
-    open_in_ferdium "$url"
+  target=$(unwrap_google_redirect "$url")
+  if is_teams_url "$target"; then
+    open_in_ferdium "$target"
   else
     open_in_browser "$url"
   fi
