@@ -10,6 +10,7 @@ grimblast-git
 helium-browser-bin
 hyprmoncfg
 localsend-bin
+masterpdfeditor-free
 omnictl-bin
 pikaur
 slsa-verifier-bin

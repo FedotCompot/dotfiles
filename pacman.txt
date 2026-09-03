@@ -86,6 +86,7 @@ pipewire-pulse
 polkit-kde-agent
 postgresql
 powertop
+qalculate-gtk
 qt5-wayland
 qt5ct
 qt6-wayland
