@@ -10,3 +10,4 @@ Thumbs.db
 # Volatile app state
 config/QtProject.conf
 !home/.local/
+browser-extensions/*/_metadata/
