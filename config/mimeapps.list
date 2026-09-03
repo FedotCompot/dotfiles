@@ -18,3 +18,4 @@ x-scheme-handler/webcal=helium.desktop
 x-scheme-handler/tg=userapp-AyuGram Desktop-HIAQO3.desktop;userapp-AyuGram Desktop-GQ2MU3.desktop;
 x-scheme-handler/tonsite=userapp-AyuGram Desktop-QHFQO3.desktop;userapp-AyuGram Desktop-G58MU3.desktop;
 video/matroska=vlc.desktop;
+application/pdf=masterpdfeditor4.desktop;
