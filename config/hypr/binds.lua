@@ -89,6 +89,7 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = tr
 -- Screenshots
 hl.bind("Print",           hl.dsp.exec_cmd("grim - | wl-copy"))                                 -- full screen → clipboard
 hl.bind("SHIFT + Print",   hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy"))                 -- region → clipboard
+hl.bind("CTRL + Print",    hl.dsp.exec_cmd("~/.config/hypr/scripts/qr-scan.sh"))                    -- region → decode qr code
 hl.bind("ALT + SHIFT + S", hl.dsp.exec_cmd("grim - | satty -f - --copy-command wl-copy"))    -- region → satty editor
 -- hl.bind("ALT + SHIFT + S", hl.dsp.exec_cmd("grimblast --freeze save area - | swappy -f -"))    -- region → swappy editor
 hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("~/.config/hypr/scripts/screen-record.sh"))   -- toggle region screen recording

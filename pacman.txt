@@ -137,3 +137,4 @@ xorg-server
 xorg-xinit
 yq
 zathura
+zxing-cpp
