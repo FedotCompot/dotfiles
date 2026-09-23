@@ -123,6 +123,7 @@ vlc-plugins-all
 vulkan-intel
 waybar
 wev
+wf-recorder
 wget
 wireplumber
 wl-clipboard
