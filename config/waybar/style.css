@@ -332,6 +332,23 @@ label:focus {
     background-color: #0069d4;
 }
 
+@keyframes pulse {
+    to {
+        color: rgba(255, 255, 255, 0.15);
+    }
+}
+
+#custom-recording.recording {
+    padding: 0 10px;
+    background-color: #f53c3c;
+    color: #ffffff;
+    animation-name: pulse;
+    animation-duration: 0.8s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
 #custom-notification {
     font-family: "Symbols Nerd Font";
     padding: 0 10px;

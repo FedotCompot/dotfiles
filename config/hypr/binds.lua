@@ -91,7 +91,7 @@ hl.bind("Print",           hl.dsp.exec_cmd("grim - | wl-copy"))                 
 hl.bind("SHIFT + Print",   hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy"))                 -- region → clipboard
 hl.bind("ALT + SHIFT + S", hl.dsp.exec_cmd("grim - | satty -f - --copy-command wl-copy"))    -- region → satty editor
 -- hl.bind("ALT + SHIFT + S", hl.dsp.exec_cmd("grimblast --freeze save area - | swappy -f -"))    -- region → swappy editor
-hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("mkdir -p ~/Videos/ScreenRecording && wf-recorder -g \"$(slurp)\" -f ~/Videos/ScreenRecording/%{datetime}.mp4"))  -- region → screen recording
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("~/.config/hypr/scripts/screen-record.sh"))   -- toggle region screen recording
 
 -- Misc
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
