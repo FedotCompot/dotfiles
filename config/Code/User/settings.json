@@ -46,5 +46,11 @@
     "gitlens.views.commitDetails.files.layout": "tree",
     "gitlens.graph.layout": "editor",
     "workbench.experimental.modernUI": true,
-    "gitlens.graph.details.location": "auto"
+    "gitlens.graph.details.location": "auto",
+    "window.density.layout": "compact",
+    "remote.SSH.connectTimeout": 1800,
+    "remote.SSH.serverShutdownTimeout": 28800,
+    "remote.SSH.reconnectionGraceTime": 28800,
+    "remote.SSH.maxReconnectionAttempts": null,
+    "claudeCode.hideOnboarding": true
 }
