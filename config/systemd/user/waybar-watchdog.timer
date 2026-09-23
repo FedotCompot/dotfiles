@@ -1,0 +1,8 @@
+[Unit]
+Description=Periodic waybar liveness probe
+PartOf=waybar.service
+
+[Timer]
+OnActiveSec=45
+OnUnitInactiveSec=30
+AccuracySec=5

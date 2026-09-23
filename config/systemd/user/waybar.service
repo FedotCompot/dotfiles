@@ -1,0 +1,15 @@
+# shadows the packaged unit, whose Requisite= loses the race against graphical-session.target
+[Unit]
+Description=Waybar status bar
+PartOf=graphical-session.target
+After=graphical-session.target
+Wants=waybar-watchdog.timer
+StartLimitIntervalSec=0
+
+[Service]
+ExecStart=/usr/bin/waybar
+ExecReload=kill -SIGUSR2 $MAINPID
+Restart=always
+RestartSec=2
+# a wedged bar will not answer SIGTERM, so reach SIGKILL quickly
+TimeoutStopSec=10

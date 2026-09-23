@@ -1,0 +1,9 @@
+[Unit]
+Description=Restart waybar if it is running but not drawing
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/waybar/watchdog.sh
+# drop systemd's twice-a-minute lifecycle chatter, keep what the script says
+SyslogLevel=warning
+LogLevelMax=warning
