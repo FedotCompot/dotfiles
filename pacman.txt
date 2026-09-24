@@ -29,6 +29,7 @@ exfatprogs
 expac
 expect
 fastfetch
+file-roller
 fuse2
 fuse2fs
 fzf
@@ -105,6 +106,7 @@ swappy
 swaync
 system-config-printer
 thunar
+thunar-archive-plugin
 thunar-volman
 timeshift
 trash-cli
