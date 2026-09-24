@@ -30,9 +30,7 @@
         "scminput": false
     },
     "remote.SSH.useLocalServer": false,
-    "remote.SSH.remotePlatform": {
-        "192.168.3.161": "linux"
-    },
+    "remote.SSH.remotePlatform": {"192.168.3.161":"linux","coder-vscode.coder.dev.hierarchy40.com--fiodarshurankou--test-space.main":"linux"},
     "gitlens.graph.autoFetch.enabled": true,
     "explorer.confirmDelete": false,
     "git.confirmSync": false,
