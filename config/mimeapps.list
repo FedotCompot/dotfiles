@@ -14,6 +14,17 @@ x-scheme-handler/freelens=freelens.desktop
 x-scheme-handler/claude=com.anthropic.Claude.desktop
 x-scheme-handler/webcal=helium.desktop
 x-scheme-handler/t3code=t3code-url-handler.desktop
+application/zip=org.gnome.FileRoller.desktop
+application/x-7z-compressed=org.gnome.FileRoller.desktop
+application/vnd.rar=org.gnome.FileRoller.desktop
+application/x-rar=org.gnome.FileRoller.desktop
+application/x-tar=org.gnome.FileRoller.desktop
+application/gzip=org.gnome.FileRoller.desktop
+application/x-compressed-tar=org.gnome.FileRoller.desktop
+application/x-bzip2-compressed-tar=org.gnome.FileRoller.desktop
+application/x-xz-compressed-tar=org.gnome.FileRoller.desktop
+application/x-zstd-compressed-tar=org.gnome.FileRoller.desktop
+application/zstd=org.gnome.FileRoller.desktop
 
 [Added Associations]
 x-scheme-handler/tg=userapp-AyuGram Desktop-HIAQO3.desktop;userapp-AyuGram Desktop-GQ2MU3.desktop;
