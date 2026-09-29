@@ -54,7 +54,7 @@ hl.window_rule({
 hl.window_rule({ name = "ws-terminal",         match = { class = "Alacritty" },                                                                                                       workspace = ws.ws_terminal })
 hl.window_rule({ name = "ws-browser-work",     match = { class = "^(helium-work|helium|[Cc]hromium|firefox|brave-browser)$" },                                                        workspace = ws.ws_browser })
 hl.window_rule({ name = "ws-browser-personal", match = { class = "^(helium-personal)$" },                                                                                             workspace = ws.ws_flex1 })
-hl.window_rule({ name = "ws-code",             match = { class = "^(code-url-handler|[Cc]ode|[Cc]odium|VSCodium)$" },                                                                 workspace = ws.ws_code     .. " silent" })
+hl.window_rule({ name = "ws-code",             match = { class = "^(code-url-handler|[Cc]ode|com\\.microsoft\\.VSCode|[Cc]odium|VSCodium)$" },                                         workspace = ws.ws_code     .. " silent" })
 hl.window_rule({ name = "ws-devops",           match = { class = "^(Freelens)$" },                                                                                                    workspace = ws.ws_devops })
 hl.window_rule({ name = "ws-devops-navicat",   match = { title = "^Navicat Premium.*$" },                                                                                             workspace = ws.ws_devops   .. " silent" })
 hl.window_rule({ name = "ws-files",            match = { class = "^.*(dolphin|[Tt]hunar|[Nn]autilus|[Nn]emo)$" },                                                                     workspace = ws.ws_files })
