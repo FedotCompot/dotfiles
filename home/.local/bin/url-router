@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# default http(s) handler: Teams links go to Ferdium's Teams service, the rest to the browser
+# default http(s) handler: Teams links go to Ferdium, personal sites to the personal browser, the rest to work
 set -euo pipefail
 
 browser_desktop_id=helium-work
+personal_browser_desktop_id=helium-personal
+personal_hosts='github\.com|githubusercontent\.com|github\.io|discord\.com|discord\.gg|discordapp\.com|discordapp\.net'
 ferdium_dir="$HOME/.config/Ferdium"
 teams_hosts='teams\.microsoft\.com|teams\.cloud\.microsoft|teams\.live\.com'
 
@@ -34,6 +36,10 @@ teams_sidebar_slot() {
        (select json_extract(settings, '\$.order') from services where recipeId = 'msteams');"
 }
 
+is_personal_url() {
+  [[ "${1,,}" =~ ^https?://([^/?#@]*\.)?($personal_hosts)([:/?#]|$) ]]
+}
+
 hypr() {
   hyprctl eval "return hl.dispatch($1)" >/dev/null
 }
@@ -59,6 +65,10 @@ open_in_browser() {
   gtk-launch "$browser_desktop_id" "$@"
 }
 
+open_in_personal_browser() {
+  gtk-launch "$personal_browser_desktop_id" "$@"
+}
+
 if (($# == 0)); then
   open_in_browser
   exit
@@ -68,6 +78,8 @@ for url in "$@"; do
   target=$(unwrap_google_redirect "$url")
   if is_teams_url "$target"; then
     open_in_ferdium "$target"
+  elif is_personal_url "$target"; then
+    open_in_personal_browser "$url"
   else
     open_in_browser "$url"
   fi

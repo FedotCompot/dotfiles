@@ -2,7 +2,7 @@
 Version=1.0
 Type=Application
 Name=URL Router
-Comment=Opens Teams links in Ferdium, everything else in the browser
+Comment=Opens Teams links in Ferdium, personal sites in the personal browser, everything else in the work browser
 Exec=/home/fedot/.local/bin/url-router %U
 Icon=ferdium
 Terminal=false
