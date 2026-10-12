@@ -15,9 +15,9 @@ hl.bind(mainMod .. " + D",         hl.dsp.exec_cmd(progs.menu))
 hl.bind(mainMod .. " + P",         hl.dsp.window.pseudo())                  -- dwindle
 hl.bind(mainMod .. " + J",         hl.dsp.layout("togglesplit"))            -- dwindle
 
--- Cycle layouts: dwindle → master → scroller → monocle
-hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("~/.config/hypr/scripts/cycle-layout.sh"))
-hl.bind(mainMod .. " + ALT + L",   hl.dsp.exec_cmd("~/.config/hypr/scripts/layout-picker.sh"))  -- pick layout for the active workspace
+-- Active workspace layout: cycle, or pick from a menu
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("~/.config/hypr/scripts/workspace-layout.sh cycle"))
+hl.bind(mainMod .. " + ALT + L",   hl.dsp.exec_cmd("~/.config/hypr/scripts/workspace-layout.sh pick"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
