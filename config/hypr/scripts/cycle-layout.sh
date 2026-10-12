@@ -1,5 +1,5 @@
 #!/bin/bash
-layouts=("dwindle" "master" "scroller" "monocle")
+layouts=("dwindle" "master" "scrolling" "monocle")
 labels=("Dwindle" "Master" "Scrolling" "Monocle")
 
 current=$(hyprctl getoption general:layout -j | jq -r '.str')
