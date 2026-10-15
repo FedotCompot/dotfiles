@@ -6,10 +6,11 @@ After=network-online.target
 [Service]
 Type=oneshot
 Environment="PKGS=visual-studio-code-bin helium-browser-bin t3code-nightly-bin ferdium-nightly-bin talosctl-bin omnictl-bin freelens-bin"
-# drop pikaur's regenerated .SRCINFO, it blocks git pull
+# pikaur's "remove dir and clone again" for clones that would block git pull
 ExecStartPre=/usr/bin/runuser -u %i -- /bin/sh -c 'for p; do \
   d=/home/%i/.local/share/pikaur/aur_repos/$$p; \
-  if [ -d "$$d" ]; then git -C "$$d" checkout -- .; fi; \
+  if [ -d "$$d" ] && [ -n "$$(git -C "$$d" status --porcelain --untracked-files=no)" ]; then \
+  rm -rf "$$d"; fi; \
   done' sh $PKGS
 # root installs, builds drop to %i, same as pikaur's own sudo re-exec
 ExecStart=/bin/sh -c 'exec pikaur -S --needed --noconfirm --noedit --nodiff \
