@@ -29,6 +29,9 @@ config/                     -> $HOME/.config/
   mimeapps.list             default app handlers
   pavucontrol.ini
   pikaur.conf.template      (seeded; pikaur rewrites paths locally)
+
+system/systemd/             -> /etc/systemd/system/ (copied by first-login.sh)
+  aur-autoupdate@.{service,timer}  daily update of selected AUR packages
 ```
 
 Files ending in `.template` are **copied** on first install instead of
@@ -86,6 +89,12 @@ Run once after the first real boot (see [INSTALL.md §3](INSTALL.md#3-first-boot
 Enables system services, sets the XDG dark-mode hint, writes the VSCode
 `.desktop` Wayland override, configures Timeshift for BTRFS, and takes a
 baseline snapshot. Idempotent.
+
+It also installs and enables `aur-autoupdate@$USER.timer`, which once a day
+runs `pikaur -S --needed` as root for the packages listed in
+`system/systemd/aur-autoupdate@.service`. The builds run as your user. To
+change the list, edit that unit and re-run `./first-login.sh` to copy it
+into `/etc`. Logs: `journalctl -u aur-autoupdate@$USER`.
 
 ## What's deliberately not in here
 
