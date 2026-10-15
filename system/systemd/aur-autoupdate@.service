@@ -1,0 +1,20 @@
+[Unit]
+Description=Update selected AUR packages, built as %i
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+# root installs, builds drop to %i, same as pikaur's own sudo re-exec
+ExecStart=/bin/sh -c 'exec pikaur -S --needed --noconfirm --noedit --nodiff \
+  --pikaur-config /home/%i/.config/pikaur.conf \
+  --user-id "$$(id -u %i)" --group-id "$$(id -g %i)" --home-dir /home/%i \
+  visual-studio-code-bin \
+  helium-browser-bin \
+  t3code-nightly-bin \
+  ferdium-nightly-bin \
+  talosctl-bin \
+  omnictl-bin \
+  freelens-bin'
+Nice=19
+IOSchedulingClass=idle

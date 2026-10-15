@@ -4,6 +4,7 @@
 # (or shouldn't) be done from chroot or via symlinked dotfiles:
 #
 #   1. Enable system services (kept out of chroot for safety)
+#      + daily AUR auto-update timer (system/systemd/)
 #   2. GNOME color-scheme = prefer-dark (XDG hint picked up by Firefox/Electron)
 #   3. User .desktop entries:
 #        a. VSCode native-Wayland override
@@ -44,6 +45,19 @@ if sudo systemctl is-enabled sddm >/dev/null 2>&1; then
 else
   sudo systemctl enable sddm
   note "sddm enabled (will start on next boot)"
+fi
+
+# 1b. Daily AUR auto-update timer.
+# Copied, not linked: root must not run a unit the user can edit.
+step "AUR auto-update timer"
+SYSTEM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/system/systemd"
+sudo install -m 644 -t /etc/systemd/system "$SYSTEM_DIR"/aur-autoupdate@.{service,timer}
+sudo systemctl daemon-reload
+if sudo systemctl is-enabled "aur-autoupdate@$USER.timer" >/dev/null 2>&1; then
+  note "already enabled (units refreshed)"
+else
+  sudo systemctl enable --now "aur-autoupdate@$USER.timer"
+  note "enabled + started"
 fi
 
 # 2. Dark mode hint -----------------------------------------------------------
