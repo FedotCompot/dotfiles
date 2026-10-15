@@ -30,13 +30,17 @@
         "scminput": false
     },
     "remote.SSH.useLocalServer": false,
-    "remote.SSH.remotePlatform": {"192.168.3.161":"linux","coder-vscode.coder.dev.hierarchy40.com--fiodarshurankou--test-space.main":"linux"},
+    "remote.SSH.remotePlatform": {
+        "192.168.3.161": "linux",
+        "coder-vscode.coder.dev.hierarchy40.com--fiodarshurankou--test-space.main": "linux",
+        "fedotcompot.net": "linux"
+    },
     "gitlens.graph.autoFetch.enabled": true,
     "explorer.confirmDelete": false,
     "git.confirmSync": false,
     "githubPullRequests.pullBranch": "never",
     "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "vscode.json-language-features"
     },
     "gitlens.graph.lanes.density": "expanded",
     "security.promptForLocalFileProtocolHandling": false,
@@ -50,5 +54,17 @@
     "remote.SSH.serverShutdownTimeout": 28800,
     "remote.SSH.reconnectionGraceTime": 28800,
     "remote.SSH.maxReconnectionAttempts": null,
-    "claudeCode.hideOnboarding": true
+    "claudeCode.hideOnboarding": true,
+    "json.schemaDownload.trustedDomains": {
+        "https://developer.microsoft.com/json-schemas/": true,
+        "https://json-schema.org/": true,
+        "https://json.schemastore.org/": true,
+        "https://models.dev": true,
+        "https://opencode.ai": true,
+        "https://raw.githubusercontent.com/devcontainers/spec/": true,
+        "https://raw.githubusercontent.com/microsoft/vscode/": true,
+        "https://schemastore.azurewebsites.net/": true,
+        "https://spec.openapis.org/": true,
+        "https://www.schemastore.org/": true
+    }
 }
