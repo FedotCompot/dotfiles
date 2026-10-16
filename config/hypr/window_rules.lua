@@ -52,6 +52,7 @@ hl.window_rule({
     name   = "float-telegram-calls",
     match  = { class = "^(.*ayugram.*|TelegramDesktop|telegram-desktop|org\\.telegram\\.desktop)$", initial_title = "negative:^(AyuGram|Telegram|Media viewer)" },
     float  = true,
+    size   = "800 650",
     center = true,
 })
 
