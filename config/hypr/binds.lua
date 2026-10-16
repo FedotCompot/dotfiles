@@ -11,6 +11,7 @@ hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exit())
 hl.bind(mainMod .. " + E",         hl.dsp.exec_cmd(progs.fileManager))
 hl.bind(mainMod .. " + V",         hl.dsp.exec_cmd("~/.config/hypr/scripts/clipboard-history.sh"))  -- clipboard history
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + ALT + P",   hl.dsp.window.pin({ action = "toggle" }))  -- sticky, floating only
 hl.bind(mainMod .. " + D",         hl.dsp.exec_cmd(progs.menu))
 hl.bind(mainMod .. " + P",         hl.dsp.window.pseudo())                  -- dwindle
 hl.bind(mainMod .. " + J",         hl.dsp.layout("togglesplit"))            -- dwindle
