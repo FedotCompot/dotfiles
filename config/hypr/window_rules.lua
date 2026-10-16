@@ -35,7 +35,7 @@ hl.window_rule({
     name  = "float-bitwarden",
     match = { class = "^chrome-.*?-Default$", initial_title = "^_crx_nngceckbapebfimnlniiiahkandclblb$" },
     float  = true,
-    size   = "649 708",
+    size   = "480 630",  -- what the extension requests (wide width)
     center = true,
 })
 
