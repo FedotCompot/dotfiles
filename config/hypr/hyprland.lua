@@ -25,6 +25,7 @@ require("look_and_feel")
 require("input")
 require("workspaces")
 require("window_rules")
+require("pip")
 require("binds")
 require("autostart")
 

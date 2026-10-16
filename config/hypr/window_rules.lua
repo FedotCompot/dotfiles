@@ -56,13 +56,6 @@ hl.window_rule({
     center = true,
 })
 
--- Helium picture-in-picture (sets no class)
-hl.window_rule({
-    name  = "float-helium-pip",
-    match = { class = "^$", title = "^Picture in picture$" },
-    float = true,
-})
-
 -- App → workspace assignment
 -- workspace IDs: 1=terminal ` | 2=browser 1 | 3=code 2 | 4=devops 3 | 5=files 4
 --                6=media 5   | 7=chat 6    | 8=teams 7 | 9=utility 8 | 10=settings 9
