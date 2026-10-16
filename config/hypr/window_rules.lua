@@ -56,10 +56,10 @@ hl.window_rule({
     center = true,
 })
 
--- Helium picture-in-picture
+-- Helium picture-in-picture (sets no class)
 hl.window_rule({
     name  = "float-helium-pip",
-    match = { class = "^helium(-.*)?$", title = "^Picture in picture$" },
+    match = { class = "^$", title = "^Picture in picture$" },
     float = true,
 })
 
