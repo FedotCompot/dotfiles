@@ -17,6 +17,7 @@
         "custom/media",
         "mpd",
         // "idle_inhibitor",
+        "custom/audio-share",
         "pulseaudio",
         "network",
         "power-profiles-daemon",
@@ -222,6 +223,14 @@
         "signal": 8,
         "exec": "$HOME/.config/hypr/scripts/screen-record.sh status",
         "on-click": "$HOME/.config/hypr/scripts/screen-record.sh"
+    },
+    "custom/audio-share": {
+        "format": "{}",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 9,
+        "exec": "$HOME/.config/hypr/scripts/audio-share.sh status",
+        "on-click": "$HOME/.config/hypr/scripts/audio-share.sh"
     },
     "custom/power": {
         "format" : "⏻ ",

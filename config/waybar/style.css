@@ -349,6 +349,12 @@ label:focus {
     animation-direction: alternate;
 }
 
+#custom-audio-share.sharing {
+    padding: 0 10px;
+    background-color: #0069d4;
+    color: #ffffff;
+}
+
 #custom-notification {
     font-family: "Symbols Nerd Font";
     padding: 0 10px;
