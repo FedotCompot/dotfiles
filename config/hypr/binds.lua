@@ -102,3 +102,4 @@ hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen_state({ internal = 1, client
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("helium-browser"))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("claude-desktop --toggle"))   -- Claude Desktop Quick Entry
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t -sw"))
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/audio-share.sh"))   -- play on several outputs
