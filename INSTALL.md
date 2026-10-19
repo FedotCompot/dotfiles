@@ -33,10 +33,13 @@ Walk through the menu. Non-obvious choices:
 - **Disk configuration** — wipe the disk, pick **BTRFS** as the filesystem.
   Enable **zstd compression** and accept **default subvolumes** (so a
   snapshot rollback doesn't nuke `/home`).
-- **Bootloader: rEFInd** — it scans the ESP for kernels itself, so
-  `linux` and `linux-lts` both show up with no menu config to maintain.
-  Snapshots aren't bootable from the menu; roll back with Timeshift from
-  the running system or the ISO.
+- **Bootloader: rEFInd** — the boot entrypoint. It scans every ESP for
+  kernels and EFI loaders itself, so `linux`, `linux-lts` and any other
+  OS show up with no menu config to maintain. `arch-setup.sh` later adds
+  GRUB as one more rEFInd entry, purely for `grub-btrfs`'s bootable
+  Timeshift snapshots. Snapshot entries boot the *current* kernel from
+  the FAT `/boot`; if that kernel is newer than the snapshot its modules
+  are missing, so boot in only to run a Timeshift restore.
 - **Kernels** — tick `linux` **and** `linux-lts` (LTS is the fallback when
   a mainline update breaks graphics or Docker).
 - **Profile** — minimal. We bring our own desktop.
@@ -74,7 +77,10 @@ checks). What it does:
    (makepkg only verifies them, and pikaur aborts on an unknown key).
 4. Adds the user to every group listed in `usergroups.txt` (skips groups
    whose owning package isn't installed yet).
-5. Installs `@anthropic-ai/claude-code` globally via bun.
+5. Installs GRUB onto the ESP with `--no-nvram`, so rEFInd stays first in
+   the boot order and lists GRUB as an entry. Sets `GRUB_TOP_LEVEL` to
+   mainline (`grub-mkconfig` version-sorts `linux-lts` first).
+6. Installs `@anthropic-ai/claude-code` globally via bun.
 
 System services are deliberately **not** enabled here — they're enabled
 from `first-login.sh` after the first real boot, where `enable --now` is

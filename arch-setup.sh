@@ -4,6 +4,9 @@
 #   1. Enables [multilib] in /etc/pacman.conf
 #   2. Installs pikaur (AUR helper) from source
 #   3. Installs packages listed in pacman.txt (official repos) and aur.txt (AUR)
+#   4. Adds the user to the groups in usergroups.txt
+#   5. Installs GRUB next to rEFInd, for grub-btrfs snapshot entries
+#   6. Installs Claude Code via bun
 #
 # Lists are plain text, one package per line. Blank lines and `#` comments
 # are ignored. Re-running is safe — already-installed packages are skipped.
@@ -109,7 +112,26 @@ while IFS= read -r g; do
   fi
 done < <(read_list "$GROUPS_LIST")
 
-# 5. Claude Code (bun global) ----------------------------------------------------
+# 5. GRUB, chained from rEFInd ----------------------------------------------------
+# --no-nvram keeps rEFInd first; it picks GRUB up from the ESP on its own
+step "Installing GRUB as a rEFInd entry"
+esp=$(bootctl --print-esp-path 2>/dev/null || echo /boot)
+if [ ! -d /sys/firmware/efi ]; then
+  echo "  not a UEFI boot — skipping"
+else
+  if ! grep -q '^GRUB_TOP_LEVEL=' /etc/default/grub; then
+    # grub-mkconfig version-sorts linux-lts above linux
+    echo 'GRUB_TOP_LEVEL="/boot/vmlinuz-linux"' | sudo tee -a /etc/default/grub >/dev/null
+  fi
+  if [ -f "$esp/EFI/GRUB/grubx64.efi" ]; then
+    echo "  already on the ESP"
+  else
+    sudo grub-install --target=x86_64-efi --efi-directory="$esp" --bootloader-id=GRUB --no-nvram
+  fi
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
+fi
+
+# 6. Claude Code (bun global) ----------------------------------------------------
 step "Installing Claude Code CLI"
 if command -v claude >/dev/null 2>&1; then
   echo "  already installed"
