@@ -142,7 +142,9 @@ fi
 
 # 6. Claude Code (bun global) ----------------------------------------------------
 step "Installing Claude Code CLI"
-if command -v claude >/dev/null 2>&1; then
+# chroot shell predates .bashrc; keep bun's bin on .bash_profile's PATH
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+if [ -x "$XDG_CACHE_HOME/.bun/bin/claude" ]; then
   echo "  already installed"
 else
   bun install -g @anthropic-ai/claude-code
