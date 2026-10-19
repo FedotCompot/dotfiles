@@ -1,5 +1,6 @@
 ayugram-desktop-bin
 bws-bin
+claude-desktop-extra
 droidcam
 etcher-bin
 ferdium-nightly-bin
