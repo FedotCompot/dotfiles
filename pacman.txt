@@ -40,7 +40,6 @@ go
 grim
 grub
 grub-btrfs
-inotify-tools
 gst-plugin-pipewire
 gvfs
 helm
@@ -51,6 +50,7 @@ hyprlock
 hyprpaper
 hyprpicker
 inetutils
+inotify-tools
 intel-media-driver
 intel-ucode
 jq
@@ -102,6 +102,7 @@ smartmontools
 sof-firmware
 squashfs-tools
 sshpass
+starship
 steam
 sudo
 swappy
@@ -141,4 +142,5 @@ xorg-server
 xorg-xinit
 yq
 zathura
+zoxide
 zxing-cpp
