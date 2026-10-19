@@ -82,7 +82,9 @@ checks). What it does:
 5. Installs GRUB onto the ESP with `--no-nvram`, so rEFInd stays first in
    the boot order and lists GRUB as an entry. Sets `GRUB_TOP_LEVEL` to
    mainline (`grub-mkconfig` version-sorts `linux-lts` first).
-6. Installs `@anthropic-ai/claude-code` globally via bun.
+6. Builds satty from the `FedotCompot/Satty` fork (`~/code/Satty`,
+   `make install PREFIX=~/.local`, toolchain via `rustup`).
+7. Installs `@anthropic-ai/claude-code` globally via bun.
 
 System services are deliberately **not** enabled here — they're enabled
 from `first-login.sh` after the first real boot, where `enable --now` is
