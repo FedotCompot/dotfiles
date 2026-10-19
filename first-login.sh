@@ -5,6 +5,7 @@
 #
 #   1. Enable system services (kept out of chroot for safety)
 #      + daily AUR auto-update timer (system/systemd/)
+#      + ufw firewall
 #   2. GNOME color-scheme = prefer-dark (XDG hint picked up by Firefox/Electron)
 #   3. User .desktop entries:
 #        a. VSCode native-Wayland override
@@ -61,6 +62,20 @@ else
   sudo systemctl enable --now "aur-autoupdate@$USER.timer"
   note "enabled + started"
 fi
+
+# 1c. Firewall: drop inbound except MikroTik WinBox and its discovery.
+step "Firewall (ufw)"
+for rule in 8291/tcp 5678/udp 20561/udp; do
+  sudo ufw allow "$rule" >/dev/null
+done
+if sudo ufw status | grep -q '^Status: active'; then
+  note "already active (rules refreshed)"
+else
+  sudo ufw --force enable >/dev/null
+  note "enabled"
+fi
+# ufw enable only flips ENABLED=yes; the unit loads the rules at boot
+sudo systemctl enable ufw >/dev/null 2>&1
 
 # 2. Dark mode hint -----------------------------------------------------------
 step "GNOME color-scheme = prefer-dark"
