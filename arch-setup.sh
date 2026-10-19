@@ -132,7 +132,7 @@ else
     # grub-mkconfig version-sorts linux-lts above linux
     echo 'GRUB_TOP_LEVEL="/boot/vmlinuz-linux"' | sudo tee -a /etc/default/grub >/dev/null
   fi
-  if [ -f "$esp/EFI/GRUB/grubx64.efi" ]; then
+  if sudo test -f "$esp/EFI/GRUB/grubx64.efi"; then  # ESP is root-only
     echo "  already on the ESP"
   else
     sudo grub-install --target=x86_64-efi --efi-directory="$esp" --bootloader-id=GRUB --no-nvram
