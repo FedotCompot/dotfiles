@@ -122,7 +122,8 @@ It's idempotent. What it does:
    gets a drop-in switching it to `--timeshift-auto`; the stock unit
    watches `/.snapshots`, which doesn't exist without snapper.
    Also turns on `ufw` (inbound dropped except WinBox `8291/tcp` and
-   MikroTik discovery `5678/udp`, `20561/udp`).
+   MikroTik discovery `5678/udp`, `20561/udp`) and enables the
+   `hyprmoncfgd` user service that applies `config/hyprmoncfg/` profiles.
 2. Sets `org.gnome.desktop.interface color-scheme` to `prefer-dark` so
    Firefox/Electron pick up the XDG dark hint.
 3. Writes a few user `.desktop` entries into
