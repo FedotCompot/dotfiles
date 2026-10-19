@@ -31,7 +31,10 @@ note() { printf '    %s\n' "$*"; }
 # non-display services; sddm is `enable` only so it picks up on next boot
 # without yanking the current tty session.
 step "Enabling system services"
-boot_services=(NetworkManager bluetooth cups docker)
+SYSTEM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/system/systemd"
+sudo install -Dm644 -t /etc/systemd/system/grub-btrfsd.service.d "$SYSTEM_DIR"/grub-btrfsd.service.d/timeshift.conf
+sudo systemctl daemon-reload
+boot_services=(NetworkManager bluetooth cups docker grub-btrfsd)
 for svc in "${boot_services[@]}"; do
   if sudo systemctl is-enabled "$svc" >/dev/null 2>&1; then
     note "$svc already enabled"
@@ -50,7 +53,6 @@ fi
 # 1b. Daily AUR auto-update timer.
 # Copied, not linked: root must not run a unit the user can edit.
 step "AUR auto-update timer"
-SYSTEM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/system/systemd"
 sudo install -m 644 -t /etc/systemd/system "$SYSTEM_DIR"/aur-autoupdate@.{service,timer}
 sudo systemctl daemon-reload
 if sudo systemctl is-enabled "aur-autoupdate@$USER.timer" >/dev/null 2>&1; then

@@ -40,6 +40,7 @@ go
 grim
 grub
 grub-btrfs
+inotify-tools
 gst-plugin-pipewire
 gvfs
 helm
