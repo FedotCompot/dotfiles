@@ -33,9 +33,10 @@ Walk through the menu. Non-obvious choices:
 - **Disk configuration** — wipe the disk, pick **BTRFS** as the filesystem.
   Enable **zstd compression** and accept **default subvolumes** (so a
   snapshot rollback doesn't nuke `/home`).
-- **Bootloader: GRUB** — picked even over systemd-boot, because
-  `grub-btrfs` integration is the path of least resistance for bootable
-  snapshots.
+- **Bootloader: rEFInd** — it scans the ESP for kernels itself, so
+  `linux` and `linux-lts` both show up with no menu config to maintain.
+  Snapshots aren't bootable from the menu; roll back with Timeshift from
+  the running system or the ISO.
 - **Kernels** — tick `linux` **and** `linux-lts` (LTS is the fallback when
   a mainline update breaks graphics or Docker).
 - **Profile** — minimal. We bring our own desktop.
@@ -107,7 +108,7 @@ sudo reboot   # so sddm starts and group changes apply
 It's idempotent. What it does:
 
 1. Enables system services: `NetworkManager`, `bluetooth`, `cups`,
-   `docker`, `grub-btrfsd` (with `enable --now`), and `sddm`
+   `docker` (with `enable --now`), and `sddm`
    (`enable` only — `--now` would yank the TTY session).
 2. Sets `org.gnome.desktop.interface color-scheme` to `prefer-dark` so
    Firefox/Electron pick up the XDG dark hint.

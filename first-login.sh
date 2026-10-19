@@ -31,7 +31,7 @@ note() { printf '    %s\n' "$*"; }
 # non-display services; sddm is `enable` only so it picks up on next boot
 # without yanking the current tty session.
 step "Enabling system services"
-boot_services=(NetworkManager bluetooth cups docker grub-btrfsd)
+boot_services=(NetworkManager bluetooth cups docker)
 for svc in "${boot_services[@]}"; do
   if sudo systemctl is-enabled "$svc" >/dev/null 2>&1; then
     note "$svc already enabled"
