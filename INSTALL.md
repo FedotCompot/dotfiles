@@ -68,7 +68,9 @@ checks). What it does:
 
 1. Enables `[multilib]` in `/etc/pacman.conf`.
 2. Bootstraps `pikaur` from AUR (only if missing).
-3. Installs everything in `pacman.txt` (official repos) and `aur.txt` (AUR).
+3. Installs everything in `pacman.txt` (official repos) and `aur.txt` (AUR),
+   importing the PGP keys AUR packages declare in `validpgpkeys` first
+   (makepkg only verifies them, and pikaur aborts on an unknown key).
 4. Adds the user to every group listed in `usergroups.txt` (skips groups
    whose owning package isn't installed yet).
 5. Installs `@anthropic-ai/claude-code` globally via bun.
