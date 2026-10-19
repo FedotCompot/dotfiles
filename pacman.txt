@@ -11,6 +11,7 @@ blueman
 bluez
 bluez-utils
 bolt
+brightnessctl
 btop
 btrfs-progs
 bun
