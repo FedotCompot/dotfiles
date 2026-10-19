@@ -19,7 +19,6 @@ hl.env("HYPRCURSOR_SIZE",              "24")
 
 -- Module requires — each is its own Lua scope, so a runtime error in one
 -- file does not abort execution of the others.
-require("monitors")
 require("layouts")
 require("look_and_feel")
 require("input")
