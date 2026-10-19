@@ -85,15 +85,17 @@ desktop_dirty=0
 # code-flags.conf is ignored by visual-studio-code-bin, so the wayland flags
 # have to go straight on the Exec= line.
 step "VSCode native Wayland .desktop override"
-SYS_DESKTOP=/usr/share/applications/code.desktop
-USR_DESKTOP="$APPS_DIR/code.desktop"
+# newer visual-studio-code-bin ships it as com.microsoft.VSCode.desktop
+SYS_DESKTOP=/usr/share/applications/com.microsoft.VSCode.desktop
+[ -f "$SYS_DESKTOP" ] || SYS_DESKTOP=/usr/share/applications/code.desktop
+USR_DESKTOP="$APPS_DIR/$(basename "$SYS_DESKTOP")"
 WL_FLAGS="--ozone-platform-hint=wayland --enable-features=WaylandWindowDecorations"
 if [ ! -f "$SYS_DESKTOP" ]; then
   note "$SYS_DESKTOP missing — install visual-studio-code-bin first; skipping"
 elif [ -f "$USR_DESKTOP" ] && grep -q 'ozone-platform-hint=wayland' "$USR_DESKTOP"; then
   note "already overridden"
 else
-  sed -E "s|^(Exec=/usr/bin/code)(.*)( %[FU])$|\\1\\2 ${WL_FLAGS}\\3|" \
+  sed -E "s|^(Exec=(/usr/bin/)?code)( .*)?( %[FU])$|\\1\\3 ${WL_FLAGS}\\4|" \
     "$SYS_DESKTOP" > "$USR_DESKTOP"
   desktop_dirty=1
   note "ok ($USR_DESKTOP)"

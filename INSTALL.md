@@ -125,7 +125,7 @@ It's idempotent. What it does:
 3. Writes a few user `.desktop` entries into
    `~/.local/share/applications/` (can't be tracked dotfiles — they have
    to be generated against system files or runtime-resolved paths):
-   - `code.desktop` with Wayland flags appended to `Exec=`
+   - `com.microsoft.VSCode.desktop` with Wayland flags appended to `Exec=`
      (see [§4](#4-notes--gotchas-the-why)).
    - `helium-personal.desktop` + `helium-work.desktop` — separate
      `--user-data-dir` profiles with distinct `StartupWMClass` so Hyprland
@@ -168,8 +168,8 @@ get stretched — everything looks fuzzy. Two layers of fix in
   apps globally.
 - `visual-studio-code-bin` ignores `~/.config/code-flags.conf`, so its
   Wayland flags have to go on the `Exec=` line of a local override at
-  `~/.local/share/applications/code.desktop` (copy from
-  `/usr/share/applications/code.desktop`, append
+  `~/.local/share/applications/com.microsoft.VSCode.desktop` (copy from
+  `/usr/share/applications/com.microsoft.VSCode.desktop`, append
   `--ozone-platform-hint=wayland --enable-features=WaylandWindowDecorations`,
   then `update-desktop-database ~/.local/share/applications/`).
 
