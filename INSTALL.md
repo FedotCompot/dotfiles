@@ -116,6 +116,7 @@ sudo reboot   # so sddm starts and group changes apply
 It's idempotent. What it does:
 
 1. Enables system services: `NetworkManager`, `bluetooth`, `cups`,
+   `cronie` (runs Timeshift's boot schedule),
    `docker`, `grub-btrfsd` (with `enable --now`), and `sddm`
    (`enable` only — `--now` would yank the TTY session). `grub-btrfsd`
    gets a drop-in switching it to `--timeshift-auto`; the stock unit
@@ -134,7 +135,9 @@ It's idempotent. What it does:
      browser can deep-link into Claude Code (`Exec=` points at the real
      binary `readlink -f`'d from `command -v claude`, not the bun wrapper).
 4. Writes a minimal `/etc/timeshift/timeshift.json` in BTRFS mode if one
-   doesn't exist yet (otherwise flips `btrfs_mode` to `true`).
+   doesn't exist yet, then makes sure `btrfs_mode` is `true` and
+   `backup_device_uuid` is the root filesystem's (without it
+   `timeshift --list` shows no snapshots).
    `timeshift-autosnap` is a no-op without this — its pacman hook would
    silently fail to take pre-update snapshots.
 5. Takes a baseline Timeshift snapshot tagged `post-install baseline`.
