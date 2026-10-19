@@ -31,6 +31,14 @@ fi
 
 step() { printf '\n==> %s\n' "$*"; }
 
+# gpg daemons killed with the chroot leave keyring locks nothing can clear
+tmp=""
+cleanup() {
+  gpgconf --kill all 2>/dev/null || true
+  [ -z "$tmp" ] || rm -rf "$tmp"
+}
+trap cleanup EXIT
+
 # Strip comments and blank lines from a package list
 read_list() {
   local f="$1"
@@ -59,7 +67,6 @@ if command -v pikaur >/dev/null 2>&1; then
 else
   sudo pacman -S --needed --noconfirm base-devel git
   tmp="$(mktemp -d)"
-  trap 'rm -rf "$tmp"' EXIT
   git clone --depth=1 https://aur.archlinux.org/pikaur.git "$tmp/pikaur"
   ( cd "$tmp/pikaur" && makepkg -fsri --noconfirm )
 fi
