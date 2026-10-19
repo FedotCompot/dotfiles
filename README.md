@@ -43,9 +43,9 @@ symlinked, and skipped on later runs — see [`install.sh`](#installsh) below.
 git clone <this-repo> ~/code/dotfiles
 cd ~/code/dotfiles
 
-./arch-setup.sh          # multilib + pikaur + every package + user groups
 ./install.sh --dry-run   # preview dotfile symlinks
-./install.sh             # apply dotfile symlinks
+./install.sh             # apply dotfile symlinks (first, so pikaur.conf is seeded)
+./arch-setup.sh          # multilib + pikaur + every package + user groups
 # reboot, then on first TTY login:
 ./first-login.sh         # enable services, baseline snapshot, etc.
 ```
