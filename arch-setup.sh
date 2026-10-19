@@ -16,6 +16,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACMAN_LIST="$SCRIPT_DIR/pacman.txt"
 AUR_LIST="$SCRIPT_DIR/aur.txt"
+AUR_MANUAL_LIST="$SCRIPT_DIR/aur-manual.txt"
 GROUPS_LIST="$SCRIPT_DIR/usergroups.txt"
 
 if [ "${EUID:-$(id -u)}" -eq 0 ]; then
@@ -74,7 +75,8 @@ else
 fi
 
 step "Installing AUR packages from $(basename "$AUR_LIST")"
-pkgs=$(read_list "$AUR_LIST")
+manual=$(read_list "$AUR_MANUAL_LIST")
+pkgs=$(read_list "$AUR_LIST" | awk -v skip="$manual" 'BEGIN { split(skip, a, "\n"); for (i in a) s[a[i]] } !($0 in s)')
 if [ -n "$pkgs" ]; then
   # makepkg checks validpgpkeys but never fetches them
   # shellcheck disable=SC2086
@@ -140,3 +142,6 @@ else
 fi
 
 step "Done"
+for p in $manual; do
+  echo "  $p is manual (see $(basename "$AUR_MANUAL_LIST")): git clone https://aur.archlinux.org/$p.git, drop the source in, makepkg -si"
+done

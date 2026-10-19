@@ -1,0 +1,5 @@
+# AUR packages whose sources can't be fetched unattended.
+# arch-setup.sh leaves them out of the batch and prints how to build them,
+# so aur.txt can stay a plain `pacman -Qqem` dump.
+
+vmware-vmrc   # needs the .bundle from https://www.vmware.com/go/download-vmrc

@@ -71,6 +71,10 @@ pacman -Qqen > pacman.txt   # explicit native packages
 pacman -Qqem > aur.txt      # explicit AUR/foreign packages
 ```
 
+AUR packages listed in `aur-manual.txt` (sources behind a login, like
+`vmware-vmrc`) are skipped by `arch-setup.sh`, which prints how to build
+them by hand at the end.
+
 ### `install.sh`
 
 Symlinks tracked files into their real locations and moves any pre-existing
