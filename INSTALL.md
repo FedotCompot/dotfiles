@@ -33,6 +33,11 @@ Walk through the menu. Non-obvious choices:
 - **Disk configuration** — wipe the disk, pick **BTRFS** as the filesystem.
   Enable **zstd compression** and accept **default subvolumes** (so a
   snapshot rollback doesn't nuke `/home`).
+- **Disk encryption: LUKS** on the root (btrfs) partition, not the ESP.
+  The ESP stays plain FAT so the firmware and rEFInd can read the
+  kernels; the initramfs `encrypt` hook asks for the passphrase.
+  archinstall writes the `cryptdevice=` parameter for rEFInd, and
+  `arch-setup.sh` copies it into GRUB's command line.
 - **Bootloader: rEFInd** — the boot entrypoint. It scans every ESP for
   kernels and EFI loaders itself, so `linux`, `linux-lts` and any other
   OS show up with no menu config to maintain. `arch-setup.sh` later adds
@@ -81,7 +86,9 @@ checks). What it does:
    whose owning package isn't installed yet).
 5. Installs GRUB onto the ESP with `--no-nvram`, so rEFInd stays first in
    the boot order and lists GRUB as an entry. Sets `GRUB_TOP_LEVEL` to
-   mainline (`grub-mkconfig` version-sorts `linux-lts` first).
+   mainline (`grub-mkconfig` version-sorts `linux-lts` first) and, on an
+   encrypted install, copies the LUKS parameters from `refind_linux.conf`
+   into `GRUB_CMDLINE_LINUX`.
 6. Builds satty from the `FedotCompot/Satty` fork (`~/code/Satty`,
    `make install PREFIX=~/.local`, toolchain via `rustup`).
 7. Installs `@anthropic-ai/claude-code` globally via bun.

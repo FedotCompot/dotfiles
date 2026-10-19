@@ -133,6 +133,13 @@ else
     # grub-mkconfig version-sorts linux-lts above linux
     echo 'GRUB_TOP_LEVEL="/boot/vmlinuz-linux"' | sudo tee -a /etc/default/grub >/dev/null
   fi
+  # archinstall gave only rEFInd the LUKS unlock parameters
+  luks=$(sudo sed -n '1s/^"[^"]*" *"\(.*\)"$/\1/p' /boot/refind_linux.conf 2>/dev/null \
+    | tr ' ' '\n' | grep -E '^(rd\.luks\.|cryptdevice=)' | paste -sd ' ' || true)
+  if [ -n "$luks" ] && ! grep -qF "$luks" /etc/default/grub; then
+    sudo sed -i "s|^GRUB_CMDLINE_LINUX=\"\(.*\)\"|GRUB_CMDLINE_LINUX=\"\1 $luks\"|" /etc/default/grub
+    echo "  LUKS parameters: $luks"
+  fi
   if sudo test -f "$esp/EFI/GRUB/grubx64.efi"; then  # ESP is root-only
     echo "  already on the ESP"
   else
