@@ -5,7 +5,7 @@
 #
 #   1. Enable system services (kept out of chroot for safety)
 #      + daily AUR auto-update timer (system/systemd/)
-#      + ufw firewall, user services (hyprmoncfgd)
+#      + ufw firewall, user services (hyprmoncfgd, gnome-keyring)
 #   2. GNOME color-scheme = prefer-dark (XDG hint picked up by Firefox/Electron)
 #   3. User .desktop entries:
 #        a. VSCode native-Wayland override
@@ -79,7 +79,7 @@ sudo systemctl enable ufw >/dev/null 2>&1
 
 # 1d. User services; they start with the next graphical session.
 step "User services"
-user_services=(hyprmoncfgd)
+user_services=(hyprmoncfgd gnome-keyring-daemon.socket)
 for svc in "${user_services[@]}"; do
   if systemctl --user is-enabled "$svc" >/dev/null 2>&1; then
     note "$svc already enabled"
