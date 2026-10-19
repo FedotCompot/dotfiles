@@ -34,7 +34,7 @@ step "Enabling system services"
 SYSTEM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/system/systemd"
 sudo install -Dm644 -t /etc/systemd/system/grub-btrfsd.service.d "$SYSTEM_DIR"/grub-btrfsd.service.d/timeshift.conf
 sudo systemctl daemon-reload
-boot_services=(NetworkManager bluetooth cups docker grub-btrfsd)
+boot_services=(NetworkManager bluetooth cups cronie docker grub-btrfsd)
 for svc in "${boot_services[@]}"; do
   if sudo systemctl is-enabled "$svc" >/dev/null 2>&1; then
     note "$svc already enabled"
@@ -182,10 +182,11 @@ step "Timeshift BTRFS mode"
 TS_CONF=/etc/timeshift/timeshift.json
 if ! command -v timeshift >/dev/null 2>&1; then
   note "timeshift not installed — skipping"
-elif [ ! -f "$TS_CONF" ]; then
-  note "writing minimal BTRFS config"
-  sudo mkdir -p "$(dirname "$TS_CONF")"
-  sudo tee "$TS_CONF" >/dev/null <<'JSON'
+else
+  if [ ! -f "$TS_CONF" ]; then
+    note "writing minimal BTRFS config"
+    sudo mkdir -p "$(dirname "$TS_CONF")"
+    sudo tee "$TS_CONF" >/dev/null <<'JSON'
 {
   "btrfs_mode" : "true",
   "include_btrfs_home_for_backup" : "false",
@@ -206,11 +207,17 @@ elif [ ! -f "$TS_CONF" ]; then
   "exclude-apps" : []
 }
 JSON
-elif sudo grep -q '"btrfs_mode" *: *"true"' "$TS_CONF"; then
-  note "already in BTRFS mode"
-else
-  sudo sed -i 's|"btrfs_mode" *: *"false"|"btrfs_mode" : "true"|' "$TS_CONF"
-  note "switched to BTRFS mode"
+  fi
+  # without a device, --list shows no snapshots
+  root_uuid=$(findmnt -no UUID /)
+  if sudo jq -e --arg u "$root_uuid" '.btrfs_mode == "true" and .backup_device_uuid == $u' "$TS_CONF" >/dev/null; then
+    note "already in BTRFS mode on $root_uuid"
+  else
+    sudo jq --arg u "$root_uuid" '.btrfs_mode = "true" | .backup_device_uuid = $u' "$TS_CONF" \
+      | sudo tee "$TS_CONF.new" >/dev/null
+    sudo mv "$TS_CONF.new" "$TS_CONF"
+    note "BTRFS mode on $root_uuid"
+  fi
 fi
 
 # 5. Baseline snapshot --------------------------------------------------------
