@@ -50,10 +50,12 @@ the live ISO so we can run the dotfiles scripts from the chroot.
 Still in the Arch ISO, with the new system mounted at `/mnt`:
 
 ```bash
-# Drop into the new system as your user
-arch-chroot -u <username> /mnt /bin/bash
+# A minimal profile ships without git
+arch-chroot /mnt pacman -S --needed git
 
-cd ~
+# Drop into the new system as your user (a login shell, so HOME/USER are yours)
+arch-chroot /mnt su - <username>
+
 git clone https://github.com/FedotCompot/dotfiles ~/code/dotfiles
 cd ~/code/dotfiles
 

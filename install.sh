@@ -20,6 +20,12 @@
 
 set -euo pipefail
 
+# arch-chroot -u keeps root's HOME
+if [ "$HOME" != "$(getent passwd "$(id -un)" | cut -d: -f6)" ]; then
+  echo "HOME is not $(id -un)'s — enter the chroot with: arch-chroot /mnt su - $(id -un)" >&2
+  exit 1
+fi
+
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKUP_DIR="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
 

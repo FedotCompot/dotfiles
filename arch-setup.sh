@@ -19,6 +19,11 @@ if [ "${EUID:-$(id -u)}" -eq 0 ]; then
   echo "Run as your normal user — the script invokes sudo where needed." >&2
   exit 1
 fi
+# arch-chroot -u keeps root's HOME and USER
+if [ "${USER:-}" != "$(id -un)" ] || [ "$HOME" != "$(getent passwd "$(id -un)" | cut -d: -f6)" ]; then
+  echo "HOME/USER belong to someone else — enter the chroot with: arch-chroot /mnt su - $(id -un)" >&2
+  exit 1
+fi
 
 step() { printf '\n==> %s\n' "$*"; }
 
