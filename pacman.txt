@@ -38,6 +38,8 @@ github-cli
 gnome-disk-utility
 go
 grim
+grub
+grub-btrfs
 gst-plugin-pipewire
 gvfs
 helm
