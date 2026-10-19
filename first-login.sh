@@ -5,7 +5,7 @@
 #
 #   1. Enable system services (kept out of chroot for safety)
 #      + daily AUR auto-update timer (system/systemd/)
-#      + ufw firewall
+#      + ufw firewall, user services (hyprmoncfgd)
 #   2. GNOME color-scheme = prefer-dark (XDG hint picked up by Firefox/Electron)
 #   3. User .desktop entries:
 #        a. VSCode native-Wayland override
@@ -76,6 +76,18 @@ else
 fi
 # ufw enable only flips ENABLED=yes; the unit loads the rules at boot
 sudo systemctl enable ufw >/dev/null 2>&1
+
+# 1d. User services; they start with the next graphical session.
+step "User services"
+user_services=(hyprmoncfgd)
+for svc in "${user_services[@]}"; do
+  if systemctl --user is-enabled "$svc" >/dev/null 2>&1; then
+    note "$svc already enabled"
+  else
+    systemctl --user enable "$svc"
+    note "$svc enabled"
+  fi
+done
 
 # 2. Dark mode hint -----------------------------------------------------------
 step "GNOME color-scheme = prefer-dark"
