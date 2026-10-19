@@ -6,7 +6,8 @@
 #   3. Installs packages listed in pacman.txt (official repos) and aur.txt (AUR)
 #   4. Adds the user to the groups in usergroups.txt
 #   5. Installs GRUB next to rEFInd, for grub-btrfs snapshot entries
-#   6. Installs Claude Code via bun
+#   6. Builds satty from the FedotCompot/Satty fork into ~/.local
+#   7. Installs Claude Code via bun
 #
 # Lists are plain text, one package per line. Blank lines and `#` comments
 # are ignored. Re-running is safe — already-installed packages are skipped.
@@ -140,7 +141,22 @@ else
   sudo grub-mkconfig -o /boot/grub/grub.cfg
 fi
 
-# 6. Claude Code (bun global) ----------------------------------------------------
+# 6. Satty from the fork ------------------------------------------------------------
+step "Building satty from FedotCompot/Satty"
+SATTY_DIR="$HOME/code/Satty"
+if [ -x "$HOME/.local/bin/satty" ]; then
+  echo "  already installed"
+else
+  sudo pacman -S --needed --noconfirm gtk4 libadwaita
+  if [ ! -d "$SATTY_DIR" ]; then
+    git clone https://github.com/FedotCompot/Satty.git "$SATTY_DIR"
+    git -C "$SATTY_DIR" remote add upstream https://github.com/Satty-org/Satty
+  fi
+  rustup default >/dev/null 2>&1 || rustup default stable
+  make -C "$SATTY_DIR" install PREFIX="$HOME/.local"
+fi
+
+# 7. Claude Code (bun global) ----------------------------------------------------
 step "Installing Claude Code CLI"
 # chroot shell predates .bashrc; keep bun's bin on .bash_profile's PATH
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"

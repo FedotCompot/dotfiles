@@ -20,6 +20,7 @@ config/                     -> $HOME/.config/
   waybar/                   Waybar (config, style, mediaplayer.py, power menu)
   swaync/                   Sway notification center
   btop/                     btop system monitor
+  satty/                    satty screenshot annotator (built from the fork)
   fontconfig/               font rules
   nwg-look/                 GTK theme picker
   qt6ct/                    Qt theming
