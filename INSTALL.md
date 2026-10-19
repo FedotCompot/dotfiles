@@ -59,8 +59,8 @@ arch-chroot /mnt su - <username>
 git clone https://github.com/FedotCompot/dotfiles ~/code/dotfiles
 cd ~/code/dotfiles
 
-./arch-setup.sh          # multilib + pikaur + every pacman/aur package + groups
 ./install.sh             # symlink configs into $HOME and $HOME/.config
+./arch-setup.sh          # multilib + pikaur + every pacman/aur package + groups
 ```
 
 `arch-setup.sh` is idempotent (`--needed` everywhere, group-membership
@@ -79,10 +79,11 @@ System services are deliberately **not** enabled here — they're enabled
 from `first-login.sh` after the first real boot, where `enable --now` is
 safe and there's no risk of yanking an active session with sddm.
 
-`install.sh` walks `home/` and `config/` and symlinks every tracked file
-into `$HOME` / `$HOME/.config`, moving any pre-existing files into
-`~/.dotfiles-backup/<timestamp>/` so nothing is lost. `--dry-run` previews
-without touching anything.
+`install.sh` runs first so `pikaur.conf.template` is seeded before pikaur
+writes its own default. It walks `home/` and `config/` and symlinks every
+tracked file into `$HOME` / `$HOME/.config`, moving any pre-existing files
+into `~/.dotfiles-backup/<timestamp>/` so nothing is lost. `--dry-run`
+previews without touching anything.
 
 Exit the chroot and reboot:
 
