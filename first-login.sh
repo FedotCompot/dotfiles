@@ -35,7 +35,7 @@ step "Enabling system services"
 SYSTEM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/system/systemd"
 sudo install -Dm644 -t /etc/systemd/system/grub-btrfsd.service.d "$SYSTEM_DIR"/grub-btrfsd.service.d/timeshift.conf
 sudo systemctl daemon-reload
-boot_services=(NetworkManager bluetooth cups cronie docker grub-btrfsd)
+boot_services=(NetworkManager bluetooth cups cronie docker grub-btrfsd tailscaled proton.VPN)
 for svc in "${boot_services[@]}"; do
   if sudo systemctl is-enabled "$svc" >/dev/null 2>&1; then
     note "$svc already enabled"
@@ -270,6 +270,8 @@ fi
 step "Remaining manual steps"
 note "- reboot       — picks up sddm, applies the docker group to your session"
 note "- claude       — run from any project dir; first launch opens a browser for OAuth"
+note "- tailscale    — sudo tailscale up, then log in from the printed URL"
+note "- proton vpn   — protonvpn signin <username>"
 note "- blueman      — pair Bluetooth devices"
 note "- printers     — http://localhost:631 (CUPS) if needed"
 

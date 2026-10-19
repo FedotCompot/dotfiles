@@ -90,6 +90,7 @@ pipewire-pulse
 polkit-kde-agent
 postgresql
 powertop
+proton-vpn-cli
 qalculate-gtk
 qt5-wayland
 qt5ct
@@ -109,6 +110,7 @@ sudo
 swappy
 swaync
 system-config-printer
+tailscale
 thunar
 thunar-archive-plugin
 thunar-volman

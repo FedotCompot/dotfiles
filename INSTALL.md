@@ -117,7 +117,8 @@ It's idempotent. What it does:
 
 1. Enables system services: `NetworkManager`, `bluetooth`, `cups`,
    `cronie` (runs Timeshift's boot schedule),
-   `docker`, `grub-btrfsd` (with `enable --now`), and `sddm`
+   `docker`, `grub-btrfsd`, `tailscaled`, `proton.VPN` (with
+   `enable --now`), and `sddm`
    (`enable` only — `--now` would yank the TTY session). `grub-btrfsd`
    gets a drop-in switching it to `--timeshift-auto`; the stock unit
    watches `/.snapshots`, which doesn't exist without snapper.
@@ -148,6 +149,7 @@ It's idempotent. What it does:
 5. Takes a baseline Timeshift snapshot tagged `post-install baseline`.
 6. Prints the things still requiring manual action:
    - `claude` — first run opens a browser for OAuth.
+   - `sudo tailscale up` and `protonvpn signin <username>`.
    - Bluetooth pairing via `blueman`.
    - Printers via the CUPS web UI (`http://localhost:631`).
 
