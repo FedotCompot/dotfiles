@@ -114,8 +114,10 @@ sudo reboot   # so sddm starts and group changes apply
 It's idempotent. What it does:
 
 1. Enables system services: `NetworkManager`, `bluetooth`, `cups`,
-   `docker` (with `enable --now`), and `sddm`
-   (`enable` only — `--now` would yank the TTY session).
+   `docker`, `grub-btrfsd` (with `enable --now`), and `sddm`
+   (`enable` only — `--now` would yank the TTY session). `grub-btrfsd`
+   gets a drop-in switching it to `--timeshift-auto`; the stock unit
+   watches `/.snapshots`, which doesn't exist without snapper.
 2. Sets `org.gnome.desktop.interface color-scheme` to `prefer-dark` so
    Firefox/Electron pick up the XDG dark hint.
 3. Writes a few user `.desktop` entries into

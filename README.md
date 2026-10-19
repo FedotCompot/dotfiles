@@ -32,6 +32,7 @@ config/                     -> $HOME/.config/
 
 system/systemd/             -> /etc/systemd/system/ (copied by first-login.sh)
   aur-autoupdate@.{service,timer}  daily update of selected AUR packages
+  grub-btrfsd.service.d/     watch Timeshift's snapshot dir, not /.snapshots
 ```
 
 Files ending in `.template` are **copied** on first install instead of
