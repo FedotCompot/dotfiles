@@ -15,6 +15,8 @@ hl.config({
         allow_tearing    = false,
 
         layout = "master",
+
+        snap = { enabled = true, monitor_gap = 20, window_gap = 10, respect_gaps = true },
     },
 
     decoration = {
