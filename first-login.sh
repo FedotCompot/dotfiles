@@ -260,6 +260,11 @@ else
     note "creation failed — open Timeshift GUI once to finalize device selection"
   fi
 fi
+# grub-btrfsd races an immediate reboot
+if [ -x /etc/grub.d/41_snapshots-btrfs ]; then
+  sudo /etc/grub.d/41_snapshots-btrfs >/dev/null 2>&1
+  note "GRUB snapshot submenu regenerated"
+fi
 
 # 6. Remaining manual checklist ----------------------------------------------
 step "Remaining manual steps"
