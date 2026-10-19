@@ -73,6 +73,19 @@ fi
 step "Installing AUR packages from $(basename "$AUR_LIST")"
 pkgs=$(read_list "$AUR_LIST")
 if [ -n "$pkgs" ]; then
+  # makepkg checks validpgpkeys but never fetches them
+  # shellcheck disable=SC2086
+  query=$(printf '&arg[]=%s' $pkgs)
+  bases=$(curl -fsS "https://aur.archlinux.org/rpc/v5/info?${query#&}" | jq -r '.results[].PackageBase' | sort -u)
+  for base in $bases; do
+    curl -fsS "https://aur.archlinux.org/cgit/aur.git/plain/.SRCINFO?h=$base" | sed -n 's/^[[:space:]]*validpgpkeys = //p'
+  done | sort -u | while read -r key; do
+    if gpg --list-keys "$key" >/dev/null 2>&1; then
+      echo "  PGP key $key already imported"
+    else
+      gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key"
+    fi
+  done
   # shellcheck disable=SC2086
   pikaur -S --needed --noconfirm $pkgs
 else
