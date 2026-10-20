@@ -79,7 +79,8 @@ checks). What it does:
    importing the PGP keys AUR packages declare in `validpgpkeys` first
    (makepkg only verifies them, and pikaur aborts on an unknown key).
    Packages in `aur-manual.txt` are skipped: their sources need a manual
-   download, and one failed build aborts pikaur's whole batch.
+   download. Any other AUR package that fails to build (broken upstream)
+   is skipped with `--skip-failed-build` and listed at the end.
 4. Adds the user to every group listed in `usergroups.txt` (skips groups
    whose owning package isn't installed yet).
 5. Sets `GRUB_TOP_LEVEL` to mainline (`grub-mkconfig` version-sorts

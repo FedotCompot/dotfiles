@@ -83,6 +83,7 @@ else
 fi
 
 step "Installing AUR packages from $(basename "$AUR_LIST")"
+aur_failed=()
 manual=$(read_list "$AUR_MANUAL_LIST")
 pkgs=$(read_list "$AUR_LIST" | awk -v skip="$manual" 'BEGIN { split(skip, a, "\n"); for (i in a) s[a[i]] } !($0 in s)')
 if [ -n "$pkgs" ]; then
@@ -100,7 +101,10 @@ if [ -n "$pkgs" ]; then
     fi
   done
   # shellcheck disable=SC2086
-  pikaur -S --needed --noconfirm $pkgs
+  pikaur -S --needed --noconfirm --skip-failed-build $pkgs || true
+  for p in $pkgs; do
+    pacman -Q "$p" >/dev/null 2>&1 || aur_failed+=("$p")
+  done
 else
   echo "  (list empty or missing — skipping)"
 fi
@@ -162,4 +166,7 @@ fi
 step "Done"
 for p in $manual; do
   echo "  $p is manual (see $(basename "$AUR_MANUAL_LIST")): git clone https://aur.archlinux.org/$p.git, drop the source in, makepkg -si"
+done
+for p in "${aur_failed[@]}"; do
+  echo "  $p failed to build — retry later with: pikaur -S $p"
 done
