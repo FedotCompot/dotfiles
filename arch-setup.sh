@@ -5,7 +5,7 @@
 #   2. Installs pikaur (AUR helper) from source
 #   3. Installs packages listed in pacman.txt (official repos) and aur.txt (AUR)
 #   4. Adds the user to the groups in usergroups.txt
-#   5. Installs GRUB next to rEFInd, for grub-btrfs snapshot entries
+#   5. Regenerates the GRUB menu (mainline default, grub-btrfs submenu)
 #   6. Builds satty from the FedotCompot/Satty fork into ~/.local
 #   7. Installs Claude Code via bun
 #
@@ -122,28 +122,14 @@ while IFS= read -r g; do
   fi
 done < <(read_list "$GROUPS_LIST")
 
-# 5. GRUB, chained from rEFInd ----------------------------------------------------
-# --no-nvram keeps rEFInd first; it picks GRUB up from the ESP on its own
-step "Installing GRUB as a rEFInd entry"
-esp=$(bootctl --print-esp-path 2>/dev/null || echo /boot)
-if [ ! -d /sys/firmware/efi ]; then
-  echo "  not a UEFI boot — skipping"
+# 5. GRUB menu ----------------------------------------------------------------------
+step "Regenerating the GRUB menu"
+if [ ! -f /etc/default/grub ]; then
+  echo "  GRUB not installed — skipping"
 else
   if ! grep -q '^GRUB_TOP_LEVEL=' /etc/default/grub; then
     # grub-mkconfig version-sorts linux-lts above linux
     echo 'GRUB_TOP_LEVEL="/boot/vmlinuz-linux"' | sudo tee -a /etc/default/grub >/dev/null
-  fi
-  # archinstall gave only rEFInd the LUKS unlock parameters
-  luks=$(sudo sed -n '1s/^"[^"]*" *"\(.*\)"$/\1/p' /boot/refind_linux.conf 2>/dev/null \
-    | tr ' ' '\n' | grep -E '^(rd\.luks\.|cryptdevice=)' | paste -sd ' ' || true)
-  if [ -n "$luks" ] && ! grep -qF "$luks" /etc/default/grub; then
-    sudo sed -i "s|^GRUB_CMDLINE_LINUX=\"\(.*\)\"|GRUB_CMDLINE_LINUX=\"\1 $luks\"|" /etc/default/grub
-    echo "  LUKS parameters: $luks"
-  fi
-  if sudo test -f "$esp/EFI/GRUB/grubx64.efi"; then  # ESP is root-only
-    echo "  already on the ESP"
-  else
-    sudo grub-install --target=x86_64-efi --efi-directory="$esp" --bootloader-id=GRUB --no-nvram
   fi
   sudo grub-mkconfig -o /boot/grub/grub.cfg
 fi

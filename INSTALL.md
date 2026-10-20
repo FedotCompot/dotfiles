@@ -34,17 +34,15 @@ Walk through the menu. Non-obvious choices:
   Enable **zstd compression** and accept **default subvolumes** (so a
   snapshot rollback doesn't nuke `/home`).
 - **Disk encryption: LUKS** on the root (btrfs) partition, not the ESP.
-  The ESP stays plain FAT so the firmware and rEFInd can read the
-  kernels; the initramfs `encrypt` hook asks for the passphrase.
-  archinstall writes the `cryptdevice=` parameter for rEFInd, and
-  `arch-setup.sh` copies it into GRUB's command line.
-- **Bootloader: rEFInd** — the boot entrypoint. It scans every ESP for
-  kernels and EFI loaders itself, so `linux`, `linux-lts` and any other
-  OS show up with no menu config to maintain. `arch-setup.sh` later adds
-  GRUB as one more rEFInd entry, purely for `grub-btrfs`'s bootable
-  Timeshift snapshots. Snapshot entries boot the *current* kernel from
-  the FAT `/boot`; if that kernel is newer than the snapshot its modules
-  are missing, so boot in only to run a Timeshift restore.
+  The ESP stays plain FAT so GRUB can read the kernels without its own
+  LUKS support; the initramfs `encrypt` hook asks for the passphrase
+  once. archinstall writes the `cryptdevice=` parameter into
+  `GRUB_CMDLINE_LINUX`.
+- **Bootloader: GRUB** — picked even over systemd-boot, because
+  `grub-btrfs` integration is the path of least resistance for bootable
+  snapshots. Snapshot entries boot the *current* kernel from the FAT
+  `/boot`; if that kernel is newer than the snapshot its modules are
+  missing, so boot in only to run a Timeshift restore.
 - **Kernels** — tick `linux` **and** `linux-lts` (LTS is the fallback when
   a mainline update breaks graphics or Docker).
 - **Profile** — minimal. We bring our own desktop.
@@ -84,11 +82,9 @@ checks). What it does:
    download, and one failed build aborts pikaur's whole batch.
 4. Adds the user to every group listed in `usergroups.txt` (skips groups
    whose owning package isn't installed yet).
-5. Installs GRUB onto the ESP with `--no-nvram`, so rEFInd stays first in
-   the boot order and lists GRUB as an entry. Sets `GRUB_TOP_LEVEL` to
-   mainline (`grub-mkconfig` version-sorts `linux-lts` first) and, on an
-   encrypted install, copies the LUKS parameters from `refind_linux.conf`
-   into `GRUB_CMDLINE_LINUX`.
+5. Sets `GRUB_TOP_LEVEL` to mainline (`grub-mkconfig` version-sorts
+   `linux-lts` first) and regenerates `grub.cfg`, which also picks up
+   `grub-btrfs`'s snapshot submenu.
 6. Builds satty from the `FedotCompot/Satty` fork (`~/code/Satty`,
    `make install PREFIX=~/.local`, toolchain via `rustup`).
 7. Installs `@anthropic-ai/claude-code` globally via bun.
