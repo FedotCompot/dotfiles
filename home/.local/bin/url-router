@@ -4,12 +4,31 @@ set -euo pipefail
 
 browser_desktop_id=helium-work
 personal_browser_desktop_id=helium-personal
-personal_hosts='github\.com|githubusercontent\.com|github\.io|discord\.com|discord\.gg|discordapp\.com|discordapp\.net|npmjs\.com'
 ferdium_dir="$HOME/.config/Ferdium"
-teams_hosts='teams\.microsoft\.com|teams\.cloud\.microsoft|teams\.live\.com'
+hosts_dir="${XDG_CONFIG_HOME:-$HOME/.config}/url-router"
+
+read_hosts() {
+  local file="$hosts_dir/$1"
+  [[ -r "$file" ]] || return 0
+  sed -e 's/#.*//' -e 's/[[:space:]]//g' -e '/^$/d' -e 's/.*/\L&/' "$file"
+}
+
+mapfile -t personal_hosts < <(read_hosts personal-hosts)
+mapfile -t teams_hosts < <(read_hosts teams-hosts)
+
+url_host() {
+  [[ "${1,,}" =~ ^https?://([^/?#]*) ]] || return 1
+  local authority="${BASH_REMATCH[1]##*@}"
+  printf '%s' "${authority%:*}"
+}
 
 is_teams_url() {
-  [[ "$1" =~ ^https://($teams_hosts)([/?#]|$) ]]
+  local host h
+  [[ "${1,,}" == https://* ]] && host=$(url_host "$1") || return 1
+  for h in "${teams_hosts[@]}"; do
+    [[ "$host" == "$h" ]] && return 0
+  done
+  return 1
 }
 
 percent_decode() {
@@ -37,7 +56,12 @@ teams_sidebar_slot() {
 }
 
 is_personal_url() {
-  [[ "${1,,}" =~ ^https?://([^/?#@]*\.)?($personal_hosts)([:/?#]|$) ]]
+  local host h
+  host=$(url_host "$1") || return 1
+  for h in "${personal_hosts[@]}"; do
+    [[ "$host" == "$h" || "$host" == *."$h" ]] && return 0
+  done
+  return 1
 }
 
 hypr() {
