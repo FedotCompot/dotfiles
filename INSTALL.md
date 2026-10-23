@@ -128,11 +128,12 @@ It's idempotent. What it does:
    (`enable` only — `--now` would yank the TTY session). `grub-btrfsd`
    gets a drop-in switching it to `--timeshift-auto`; the stock unit
    watches `/.snapshots`, which doesn't exist without snapper.
-   Also turns on `ufw` (inbound dropped except WinBox `8291/tcp` and
-   MikroTik discovery `5678/udp`, `20561/udp`) and enables the user
-   units `hyprmoncfgd` (applies `config/hyprmoncfg/` profiles) and
-   `gnome-keyring-daemon.socket` (Secret Service; sddm's PAM stack
-   unlocks it with the login password).
+   Also turns on `ufw` (inbound dropped except WinBox `8291/tcp`,
+   MikroTik discovery `5678/udp`, `20561/udp`, and Sunshine's ports on
+   `tailscale0` only) and enables the user units `hyprmoncfgd` (applies
+   `config/hyprmoncfg/` profiles), `gnome-keyring-daemon.socket` (Secret
+   Service; sddm's PAM stack unlocks it with the login password) and
+   Sunshine (Moonlight host, started with the graphical session).
 2. Sets `org.gnome.desktop.interface color-scheme` to `prefer-dark` so
    Firefox/Electron pick up the XDG dark hint.
 3. Writes a few user `.desktop` entries into

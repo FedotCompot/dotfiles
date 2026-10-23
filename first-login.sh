@@ -5,7 +5,7 @@
 #
 #   1. Enable system services (kept out of chroot for safety)
 #      + daily AUR auto-update timer (system/systemd/)
-#      + ufw firewall, user services (hyprmoncfgd, gnome-keyring)
+#      + ufw firewall, user services (hyprmoncfgd, gnome-keyring, sunshine)
 #   2. GNOME color-scheme = prefer-dark (XDG hint picked up by Firefox/Electron)
 #   3. User .desktop entries:
 #        a. VSCode native-Wayland override
@@ -63,11 +63,14 @@ else
   note "enabled + started"
 fi
 
-# 1c. Firewall: drop inbound except MikroTik WinBox and its discovery.
+# 1c. Firewall: drop inbound except MikroTik WinBox, its discovery and Sunshine.
 step "Firewall (ufw)"
 for rule in 8291/tcp 5678/udp 20561/udp; do
   sudo ufw allow "$rule" >/dev/null
 done
+# Sunshine, reachable only over the tailnet
+sudo ufw allow in on tailscale0 proto tcp to any port 47984,47989,47990,48010 >/dev/null
+sudo ufw allow in on tailscale0 proto udp to any port 47998:48000,48002,48010 >/dev/null
 if sudo ufw status | grep -q '^Status: active'; then
   note "already active (rules refreshed)"
 else
@@ -79,7 +82,7 @@ sudo systemctl enable ufw >/dev/null 2>&1
 
 # 1d. User services; they start with the next graphical session.
 step "User services"
-user_services=(hyprmoncfgd gnome-keyring-daemon.socket)
+user_services=(hyprmoncfgd gnome-keyring-daemon.socket app-dev.lizardbyte.app.Sunshine)
 for svc in "${user_services[@]}"; do
   if systemctl --user is-enabled "$svc" >/dev/null 2>&1; then
     note "$svc already enabled"
