@@ -134,6 +134,9 @@ It's idempotent. What it does:
    `config/hyprmoncfg/` profiles), `gnome-keyring-daemon.socket` (Secret
    Service; sddm's PAM stack unlocks it with the login password) and
    Sunshine (Moonlight host, started with the graphical session).
+   Finally brings Tailscale up with no exit node (`--reset` clears any
+   set by hand); a fresh box prints a login URL here. `tailscaled` keeps
+   it connected on later boots.
 2. Sets `org.gnome.desktop.interface color-scheme` to `prefer-dark` so
    Firefox/Electron pick up the XDG dark hint.
 3. Writes a few user `.desktop` entries into
@@ -156,7 +159,7 @@ It's idempotent. What it does:
 5. Takes a baseline Timeshift snapshot tagged `post-install baseline`.
 6. Prints the things still requiring manual action:
    - `claude` — first run opens a browser for OAuth.
-   - `sudo tailscale up` and `protonvpn signin <username>`.
+   - `protonvpn signin <username>`.
    - Bluetooth pairing via `blueman`.
    - Printers via the CUPS web UI (`http://localhost:631`).
 

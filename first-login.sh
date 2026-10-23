@@ -6,6 +6,7 @@
 #   1. Enable system services (kept out of chroot for safety)
 #      + daily AUR auto-update timer (system/systemd/)
 #      + ufw firewall, user services (hyprmoncfgd, gnome-keyring, sunshine)
+#      + tailscale up without an exit node
 #   2. GNOME color-scheme = prefer-dark (XDG hint picked up by Firefox/Electron)
 #   3. User .desktop entries:
 #        a. VSCode native-Wayland override
@@ -91,6 +92,12 @@ for svc in "${user_services[@]}"; do
     note "$svc enabled"
   fi
 done
+
+# 1e. Tailscale: tailscaled reconnects on every boot once up.
+step "Tailscale"
+# --reset drops any exit node or flag set by hand
+sudo tailscale up --reset --exit-node=
+note "connected, no exit node"
 
 # 2. Dark mode hint -----------------------------------------------------------
 step "GNOME color-scheme = prefer-dark"
@@ -273,7 +280,6 @@ fi
 step "Remaining manual steps"
 note "- reboot       — picks up sddm, applies the docker group to your session"
 note "- claude       — run from any project dir; first launch opens a browser for OAuth"
-note "- tailscale    — sudo tailscale up, then log in from the printed URL"
 note "- proton vpn   — protonvpn signin <username>"
 note "- blueman      — pair Bluetooth devices"
 note "- printers     — http://localhost:631 (CUPS) if needed"
