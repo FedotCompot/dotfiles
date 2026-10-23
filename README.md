@@ -21,6 +21,7 @@ config/                     -> $HOME/.config/
   swaync/                   Sway notification center
   btop/                     btop system monitor
   satty/                    satty screenshot annotator (built from the fork)
+  sunshine/                 sunshine.conf.template (seeded; the web UI rewrites it)
   fontconfig/               font rules
   nwg-look/                 GTK theme picker
   qt6ct/                    Qt theming

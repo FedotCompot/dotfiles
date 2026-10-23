@@ -16,6 +16,7 @@ omnictl-bin
 pikaur
 slsa-verifier-bin
 speedtest-go-bin
+sunshine-bin
 t3code-nightly-bin
 talosctl-bin
 timeshift-autosnap
