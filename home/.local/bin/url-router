@@ -4,7 +4,7 @@ set -euo pipefail
 
 browser_desktop_id=helium-work
 personal_browser_desktop_id=helium-personal
-personal_hosts='github\.com|githubusercontent\.com|github\.io|discord\.com|discord\.gg|discordapp\.com|discordapp\.net'
+personal_hosts='github\.com|githubusercontent\.com|github\.io|discord\.com|discord\.gg|discordapp\.com|discordapp\.net|npmjs\.com'
 ferdium_dir="$HOME/.config/Ferdium"
 teams_hosts='teams\.microsoft\.com|teams\.cloud\.microsoft|teams\.live\.com'
 
