@@ -4,12 +4,15 @@ Description=Google Drive mount for rclone remote %i
 
 [Service]
 Type=notify
+# override per machine in a drop-in
+Environment=RCLONE_VFS_CACHE_MIN_FREE_SPACE=20G
 ExecStartPre=/usr/bin/mkdir -p %h/GoogleDrive/%i
 # offline: keep the last known shared drives
 ExecStartPre=-%h/.local/bin/gdrive-remotes %i
 ExecStart=/usr/bin/rclone mount %i_all: %h/GoogleDrive/%i \
   --vfs-cache-mode full \
-  --vfs-cache-max-size 5G \
+  --vfs-cache-max-size 10G \
+  --vfs-cache-max-age 30d \
   --dir-cache-time 1000h \
   --poll-interval 1m \
   --fast-list \

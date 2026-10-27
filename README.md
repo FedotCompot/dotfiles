@@ -118,6 +118,16 @@ minutes for a big account) and keeps it cached, so Thunar opens folders
 instantly; rclone checks for changes made elsewhere every minute. Add one
 per account:
 
+Opened files are cached per account in `~/.cache/rclone/vfs/<name>_all`, up
+to 10 GiB each, for 30 days after last use, and shrunk early to keep 20 GiB
+of disk free. Raise that floor on one machine with a drop-in:
+
+```bash
+mkdir -p ~/.config/systemd/user/rclone-gdrive@.service.d
+printf '[Service]\nEnvironment=RCLONE_VFS_CACHE_MIN_FREE_SPACE=50G\n' \
+  > ~/.config/systemd/user/rclone-gdrive@.service.d/local.conf
+```
+
 ```bash
 gdrive-add personal   # opens the browser to sign in
 gdrive-add work
