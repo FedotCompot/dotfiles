@@ -112,11 +112,15 @@ pane. Like the Drive app, each mount holds `My Drive`, `Shared with me` and
 `Shared drives/<drive>`; `gdrive-remotes` rebuilds that tree (the
 `<name>_all` combine remote) on every mount start, so newly joined shared
 drives show up after the next login or
-`systemctl --user restart rclone-gdrive@<name>`. Like the Drive app, the
-mount fetches the whole folder tree in the background when it starts (a few
+`systemctl --user restart rclone-gdrive@<name>`. The mount also fetches the whole folder tree in the background when it starts (a few
 minutes for a big account) and keeps it cached, so Thunar opens folders
 instantly; rclone checks for changes made elsewhere every minute. Add one
 per account:
+
+```bash
+gdrive-add personal   # opens the browser to sign in
+gdrive-add work
+```
 
 Opened files are cached per account in `~/.cache/rclone/vfs/<name>_all`, up
 to 10 GiB each, for 30 days after last use, and shrunk early to keep 20 GiB
@@ -126,11 +130,8 @@ of disk free. Raise that floor on one machine with a drop-in:
 mkdir -p ~/.config/systemd/user/rclone-gdrive@.service.d
 printf '[Service]\nEnvironment=RCLONE_VFS_CACHE_MIN_FREE_SPACE=50G\n' \
   > ~/.config/systemd/user/rclone-gdrive@.service.d/local.conf
-```
-
-```bash
-gdrive-add personal   # opens the browser to sign in
-gdrive-add work
+systemctl --user daemon-reload
+systemctl --user restart 'rclone-gdrive@*'
 ```
 
 Tokens live in `~/.config/rclone/rclone.conf`, which stays out of the repo,
