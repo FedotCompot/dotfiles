@@ -10,8 +10,12 @@ ExecStartPre=-%h/.local/bin/gdrive-remotes %i
 ExecStart=/usr/bin/rclone mount %i_all: %h/GoogleDrive/%i \
   --vfs-cache-mode full \
   --vfs-cache-max-size 5G \
-  --dir-cache-time 1h \
-  --poll-interval 1m
+  --dir-cache-time 1000h \
+  --poll-interval 1m \
+  --fast-list \
+  --rc --rc-addr unix://%t/rclone-gdrive-%i.sock --rc-no-auth
+# prefetch the whole tree like the drive app; polling keeps it fresh
+ExecStartPost=/usr/bin/rclone rc --unix-socket %t/rclone-gdrive-%i.sock vfs/refresh recursive=true _async=true
 # a crashed mount leaves a dead endpoint behind
 ExecStopPost=-/usr/bin/fusermount3 -uz %h/GoogleDrive/%i
 Restart=on-failure

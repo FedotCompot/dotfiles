@@ -112,7 +112,11 @@ pane. Like the Drive app, each mount holds `My Drive`, `Shared with me` and
 `Shared drives/<drive>`; `gdrive-remotes` rebuilds that tree (the
 `<name>_all` combine remote) on every mount start, so newly joined shared
 drives show up after the next login or
-`systemctl --user restart rclone-gdrive@<name>`. Add one per account:
+`systemctl --user restart rclone-gdrive@<name>`. Like the Drive app, the
+mount fetches the whole folder tree in the background when it starts (a few
+minutes for a big account) and keeps it cached, so Thunar opens folders
+instantly; rclone checks for changes made elsewhere every minute. Add one
+per account:
 
 ```bash
 gdrive-add personal   # opens the browser to sign in
