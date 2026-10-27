@@ -108,7 +108,11 @@ into `/etc`. Logs: `journalctl -u aur-autoupdate@$USER`.
 
 Each Google account is an rclone remote mounted at `~/GoogleDrive/<name>`
 by the `rclone-gdrive@<name>` user unit, and bookmarked in Thunar's side
-pane. Add one per account:
+pane. Like the Drive app, each mount holds `My Drive`, `Shared with me` and
+`Shared drives/<drive>`; `gdrive-remotes` rebuilds that tree (the
+`<name>_all` combine remote) on every mount start, so newly joined shared
+drives show up after the next login or
+`systemctl --user restart rclone-gdrive@<name>`. Add one per account:
 
 ```bash
 gdrive-add personal   # opens the browser to sign in
@@ -118,7 +122,8 @@ gdrive-add work
 Tokens live in `~/.config/rclone/rclone.conf`, which stays out of the repo,
 so re-run `gdrive-add` for each account on a new box. To drop one:
 `systemctl --user disable --now rclone-gdrive@<name>`, then
-`rclone config delete <name>` and remove its line from
+`rclone config delete` for `<name>`, `<name>_all` and
+`<name>_shared_drives`, and remove its line from
 `~/.config/gtk-3.0/bookmarks`.
 
 ## What's deliberately not in here

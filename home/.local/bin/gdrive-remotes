@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# (re)build <name>_all: My Drive, Shared with me and Shared drives of one google account
+set -euo pipefail
+
+name=${1:?usage: $(basename "$0") <name>}
+
+drives=$(rclone backend drives "$name:")
+upstreams=$(jq -r --arg r "$name" '
+  map("\"\(.name | gsub("[/\"=]"; "_") | sub("\\s+$"; ""))=\($r),team_drive=\(.id),root_folder_id=:\"")
+  | join(" ")' <<<"$drives")
+
+all="\"My Drive=$name:\" \"Shared with me=$name,shared_with_me:\""
+if [[ -n $upstreams ]]; then
+  rclone config create "${name}_shared_drives" combine upstreams="$upstreams" >/dev/null
+  all+=" \"Shared drives=${name}_shared_drives:\""
+fi
+rclone config create "${name}_all" combine upstreams="$all" >/dev/null

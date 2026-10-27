@@ -5,7 +5,9 @@ Description=Google Drive mount for rclone remote %i
 [Service]
 Type=notify
 ExecStartPre=/usr/bin/mkdir -p %h/GoogleDrive/%i
-ExecStart=/usr/bin/rclone mount %i: %h/GoogleDrive/%i \
+# offline: keep the last known shared drives
+ExecStartPre=-%h/.local/bin/gdrive-remotes %i
+ExecStart=/usr/bin/rclone mount %i_all: %h/GoogleDrive/%i \
   --vfs-cache-mode full \
   --vfs-cache-max-size 5G \
   --dir-cache-time 1h \
