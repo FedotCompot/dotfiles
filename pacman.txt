@@ -71,6 +71,7 @@ linux-headers
 linux-lts
 linux-lts-headers
 mise
+moonlight-qt
 mpv
 mtr
 nano
