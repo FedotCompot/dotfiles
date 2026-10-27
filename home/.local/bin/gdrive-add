@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# mount a google drive account under ~/GoogleDrive/<name> and bookmark it in thunar
+set -euo pipefail
+
+if [[ $# -ne 1 || ! $1 =~ ^[A-Za-z0-9_]+$ ]]; then
+  echo "usage: $(basename "$0") <name>   (letters, digits and _ only)" >&2
+  exit 2
+fi
+name=$1
+mount_dir="$HOME/GoogleDrive/$name"
+bookmarks="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-3.0/bookmarks"
+
+if ! rclone listremotes | grep -qx "$name:"; then
+  rclone config create "$name" drive scope=drive
+fi
+
+systemctl --user enable --now "rclone-gdrive@$name.service"
+
+mkdir -p "$(dirname "$bookmarks")"
+touch "$bookmarks"
+grep -q "^file://$mount_dir " "$bookmarks" || echo "file://$mount_dir Drive $name" >>"$bookmarks"
+echo "mounted at $mount_dir"

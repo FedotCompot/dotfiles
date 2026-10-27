@@ -1,0 +1,19 @@
+# instance = rclone remote name, created by gdrive-add
+[Unit]
+Description=Google Drive mount for rclone remote %i
+
+[Service]
+Type=notify
+ExecStartPre=/usr/bin/mkdir -p %h/GoogleDrive/%i
+ExecStart=/usr/bin/rclone mount %i: %h/GoogleDrive/%i \
+  --vfs-cache-mode full \
+  --vfs-cache-max-size 5G \
+  --dir-cache-time 1h \
+  --poll-interval 1m
+# a crashed mount leaves a dead endpoint behind
+ExecStopPost=-/usr/bin/fusermount3 -uz %h/GoogleDrive/%i
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

@@ -22,6 +22,7 @@ config/                     -> $HOME/.config/
   btop/                     btop system monitor
   satty/                    satty screenshot annotator (built from the fork)
   sunshine/                 sunshine.conf.template (seeded; the web UI rewrites it)
+  systemd/user/             waybar units, rclone-gdrive@ Google Drive mounts
   fontconfig/               font rules
   nwg-look/                 GTK theme picker
   qt6ct/                    Qt theming
@@ -102,6 +103,23 @@ runs `pikaur -S --needed` as root for the packages listed in
 `system/systemd/aur-autoupdate@.service`. The builds run as your user. To
 change the list, edit that unit and re-run `./first-login.sh` to copy it
 into `/etc`. Logs: `journalctl -u aur-autoupdate@$USER`.
+
+## Google Drive in Thunar
+
+Each Google account is an rclone remote mounted at `~/GoogleDrive/<name>`
+by the `rclone-gdrive@<name>` user unit, and bookmarked in Thunar's side
+pane. Add one per account:
+
+```bash
+gdrive-add personal   # opens the browser to sign in
+gdrive-add work
+```
+
+Tokens live in `~/.config/rclone/rclone.conf`, which stays out of the repo,
+so re-run `gdrive-add` for each account on a new box. To drop one:
+`systemctl --user disable --now rclone-gdrive@<name>`, then
+`rclone config delete <name>` and remove its line from
+`~/.config/gtk-3.0/bookmarks`.
 
 ## What's deliberately not in here
 
