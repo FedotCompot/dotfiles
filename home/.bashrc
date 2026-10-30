@@ -601,4 +601,5 @@ export PATH=$PATH:"$HOME/.local/bin:$HOME/.cargo/bin:/var/lib/flatpak/exports/bi
 eval "$(starship init bash)"
 eval "$(zoxide init bash)"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+[ -f "$HOME/.config/omni/serviceaccount.env" ] && . "$HOME/.config/omni/serviceaccount.env"
 alias Plex='env -u QT_STYLE_OVERRIDE Plex'
