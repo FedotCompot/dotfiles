@@ -22,17 +22,37 @@ M.ws_flex1    = "11"  -- 0 — flexible
 M.ws_flex2    = "12"  -- - — flexible
 M.ws_flex3    = "13"  -- = — flexible
 
--- Open default app when a workspace is visited for the first time
-hl.workspace_rule({ workspace = M.ws_terminal, monitor = M.monitor_center, on_created_empty = "alacritty" })
-hl.workspace_rule({ workspace = M.ws_browser,  monitor = M.monitor_left,   on_created_empty = progs.browser_work })
-hl.workspace_rule({ workspace = M.ws_flex1,    monitor = M.monitor_left,   on_created_empty = progs.browser_personal })
-hl.workspace_rule({ workspace = M.ws_code,     monitor = M.monitor_center, on_created_empty = "~/.config/hypr/scripts/code-workspace.sh" })
-hl.workspace_rule({ workspace = M.ws_devops,   monitor = M.monitor_center, on_created_empty = "freelens" })
-hl.workspace_rule({ workspace = M.ws_files,    monitor = M.monitor_center, on_created_empty = "thunar" })
-hl.workspace_rule({ workspace = M.ws_media,    monitor = M.monitor_right,  on_created_empty = "spotify" })
+hl.workspace_rule({ workspace = M.ws_terminal, monitor = M.monitor_center })
+hl.workspace_rule({ workspace = M.ws_browser,  monitor = M.monitor_left })
+hl.workspace_rule({ workspace = M.ws_flex1,    monitor = M.monitor_left })
+hl.workspace_rule({ workspace = M.ws_code,     monitor = M.monitor_center })
+hl.workspace_rule({ workspace = M.ws_devops,   monitor = M.monitor_center })
+hl.workspace_rule({ workspace = M.ws_files,    monitor = M.monitor_center })
+hl.workspace_rule({ workspace = M.ws_media,    monitor = M.monitor_right })
 hl.workspace_rule({ workspace = M.ws_chat,     monitor = M.monitor_right })
-hl.workspace_rule({ workspace = M.ws_teams,    monitor = M.monitor_right,  on_created_empty = "ferdium" })
-hl.workspace_rule({ workspace = M.ws_utility,  monitor = M.monitor_right,  on_created_empty = "obsidian" })
-hl.workspace_rule({ workspace = M.ws_settings, monitor = M.monitor_right,  on_created_empty = "pavucontrol" })
+hl.workspace_rule({ workspace = M.ws_teams,    monitor = M.monitor_right })
+hl.workspace_rule({ workspace = M.ws_utility,  monitor = M.monitor_right })
+hl.workspace_rule({ workspace = M.ws_settings, monitor = M.monitor_right })
+
+-- Open default app when a workspace is visited for the first time
+local default_apps = {
+    [M.ws_terminal] = "alacritty",
+    [M.ws_browser]  = progs.browser_work,
+    [M.ws_flex1]    = progs.browser_personal,
+    [M.ws_code]     = "~/.config/hypr/scripts/code-workspace.sh",
+    [M.ws_devops]   = "freelens",
+    [M.ws_files]    = "thunar",
+    [M.ws_media]    = "spotify",
+    [M.ws_teams]    = "ferdium",
+    [M.ws_utility]  = "obsidian",
+    [M.ws_settings] = "pavucontrol",
+}
+
+hl.on("workspace.created", function(ws)
+    local cmd = default_apps[ws.name]
+    if cmd and ws.is_empty then
+        hl.exec_cmd(cmd, { workspace = ws.name })
+    end
+end)
 
 return M
