@@ -63,8 +63,8 @@ arch-chroot /mnt pacman -S --needed git
 # Drop into the new system as your user (a login shell, so HOME/USER are yours)
 arch-chroot /mnt su - <username>
 
-git clone https://github.com/FedotCompot/dotfiles ~/code/dotfiles
-cd ~/code/dotfiles
+git clone https://github.com/FedotCompot/dotfiles ~/personal/code/dotfiles
+cd ~/personal/code/dotfiles
 
 ./install.sh             # symlink configs into $HOME and $HOME/.config
 ./arch-setup.sh          # multilib + pikaur + every pacman/aur package + groups
@@ -115,7 +115,7 @@ your user — `first-login.sh` flips on the display manager next.
 From the TTY login on the first boot:
 
 ```bash
-~/code/dotfiles/first-login.sh
+~/personal/code/dotfiles/first-login.sh
 sudo reboot   # so sddm starts and group changes apply
 ```
 

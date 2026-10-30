@@ -44,8 +44,8 @@ symlinked, and skipped on later runs — see [`install.sh`](#installsh) below.
 ## Install on a fresh box
 
 ```bash
-git clone <this-repo> ~/code/dotfiles
-cd ~/code/dotfiles
+git clone <this-repo> ~/personal/code/dotfiles
+cd ~/personal/code/dotfiles
 
 ./install.sh --dry-run   # preview dotfile symlinks
 ./install.sh             # apply dotfile symlinks (first, so pikaur.conf is seeded)

@@ -140,7 +140,7 @@ fi
 
 # 6. Satty from the fork ------------------------------------------------------------
 step "Building satty from FedotCompot/Satty"
-SATTY_DIR="$HOME/code/Satty"
+SATTY_DIR="$HOME/personal/code/Satty"
 if [ -x "$HOME/.local/bin/satty" ]; then
   echo "  already installed"
 else
