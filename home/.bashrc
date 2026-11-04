@@ -602,4 +602,8 @@ eval "$(starship init bash)"
 eval "$(zoxide init bash)"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 [ -f "$HOME/.config/omni/serviceaccount.env" ] && . "$HOME/.config/omni/serviceaccount.env"
+# bws token from the login keyring
+bws() {
+	BWS_ACCESS_TOKEN="${BWS_ACCESS_TOKEN:-$(secret-tool lookup service bws profile default)}" command bws "$@"
+}
 alias Plex='env -u QT_STYLE_OVERRIDE Plex'
