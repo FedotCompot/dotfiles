@@ -235,6 +235,9 @@ alias docker-clean=' \
   docker network prune -f ; \
   docker volume prune -f '
 
+# docker system prune that keeps the stopped WinBoat VM
+alias dprune='docker system prune --filter "label!=com.docker.compose.project=winboat"'
+
 #######################################################
 # SPECIAL FUNCTIONS
 #######################################################
