@@ -335,17 +335,18 @@ up() {
 	cd $d
 }
 
-# Automatically do an ls after each cd, z, or zoxide (not for AI agents)
-if [ -z "${CLAUDECODE}${AI_AGENT}${CODEX_SANDBOX}${CODEX_THREAD_ID}${CODEX_CI}" ]; then
+# Automatically do an ls after each cd, z, or zoxide (terminal only)
 cd ()
 {
 	if [ -n "$1" ]; then
-		builtin cd "$@" && ls
+		builtin cd "$@" || return
 	else
-		builtin cd ~ && ls
+		builtin cd ~ || return
+	fi
+	if [ -t 1 ]; then
+		ls
 	fi
 }
-fi
 
 # Returns the last 2 fields of the working directory
 pwdtail() {
