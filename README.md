@@ -31,6 +31,7 @@ config/                     -> $HOME/.config/
   kdeglobals kiorc kwalletrc dolphinrc
   mimeapps.list             default app handlers
   pavucontrol.ini
+  vesktop-flags.conf        Vesktop (Discord) flags: VA-API screenshare encoding
   pikaur.conf.template      (seeded; pikaur rewrites paths locally)
 
 system/systemd/             -> /etc/systemd/system/ (copied by first-login.sh)
