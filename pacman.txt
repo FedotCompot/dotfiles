@@ -53,6 +53,7 @@ hyprlauncher
 hyprlock
 hyprpaper
 hyprpicker
+hyprshutdown
 inetutils
 inotify-tools
 intel-media-driver
