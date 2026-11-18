@@ -11,8 +11,8 @@ hl.layout.register("horizontal", { recalculate = function(ctx)
     for i, target in ipairs(ctx.targets) do target:place(ctx:row(i, n)) end
 end })
 
--- Discord left, Telegram right at fixed widths; anything else falls back to columns
-local telegram_share = 720 / 2550
+-- Discord left, Telegram right; anything else falls back to columns
+local telegram_width = 720  -- narrower hides Telegram's folder sidebar
 
 local function chat_app(target)
     local class = target.window and target.window.class:lower() or ""
@@ -30,6 +30,7 @@ hl.layout.register("chat", { recalculate = function(ctx)
         for i, target in ipairs(ctx.targets) do target:place(ctx:column(i, #ctx.targets)) end
         return
     end
+    local telegram_share = telegram_width / ctx.area.w
     apps.discord:place(ctx:split(ctx.area, "left", 1 - telegram_share))
     apps.telegram:place(ctx:split(ctx.area, "right", telegram_share))
 end })
