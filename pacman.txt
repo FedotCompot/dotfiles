@@ -47,6 +47,7 @@ gst-plugin-pipewire
 gvfs
 helm
 htop
+hypridle
 hyprland
 hyprlauncher
 hyprlock
