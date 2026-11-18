@@ -131,7 +131,8 @@ It's idempotent. What it does:
    Also turns on `ufw` (inbound dropped except WinBox `8291/tcp`,
    MikroTik discovery `5678/udp`, `20561/udp`, and Sunshine's ports on
    `tailscale0` only) and enables the user units `hyprmoncfgd` (applies
-   `config/hyprmoncfg/` profiles), `gnome-keyring-daemon.socket` (Secret
+   `config/hyprmoncfg/` profiles), `hypridle` (locks with hyprlock after
+   15 idle minutes and before sleep), `gnome-keyring-daemon.socket` (Secret
    Service; sddm's PAM stack unlocks it with the login password) and
    Sunshine (Moonlight host, started with the graphical session).
    Finally brings Tailscale up with no exit node (`--reset` clears any
