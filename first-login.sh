@@ -83,7 +83,7 @@ sudo systemctl enable ufw >/dev/null 2>&1
 
 # 1d. User services; they start with the next graphical session.
 step "User services"
-user_services=(hyprmoncfgd gnome-keyring-daemon.socket app-dev.lizardbyte.app.Sunshine)
+user_services=(hyprmoncfgd hyprpolkitagent gnome-keyring-daemon.socket app-dev.lizardbyte.app.Sunshine)
 for svc in "${user_services[@]}"; do
   if systemctl --user is-enabled "$svc" >/dev/null 2>&1; then
     note "$svc already enabled"

@@ -52,6 +52,7 @@ hyprlauncher
 hyprlock
 hyprpaper
 hyprpicker
+hyprpolkitagent
 inetutils
 inotify-tools
 intel-media-driver
@@ -90,7 +91,6 @@ pipewire
 pipewire-alsa
 pipewire-jack
 pipewire-pulse
-polkit-kde-agent
 postgresql
 powertop
 proton-vpn-cli
