@@ -31,6 +31,7 @@ config/                     -> $HOME/.config/
   kdeglobals kiorc kwalletrc dolphinrc
   mimeapps.list             default app handlers
   pavucontrol.ini
+  electron44-flags.conf     system Electron 44 flags (Ferdium): VA-API Teams screenshare
   pikaur.conf.template      (seeded; pikaur rewrites paths locally)
 
 system/systemd/             -> /etc/systemd/system/ (copied by first-login.sh)
